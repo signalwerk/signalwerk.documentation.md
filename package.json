@@ -1,0 +1,48 @@
+{
+  "name": "signalwerk.documentation.md",
+  "version": "0.0.1",
+  "description": "Markdown handler for documentations",
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/signalwerk/signalwerk.documentation.md.git"
+  },
+  "keywords": [
+    "documentation",
+    "md",
+    "markdown"
+  ],
+  "author": "Stefan Huber – sh@signalwerk.ch",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/signalwerk/signalwerk.documentation.md/issues"
+  },
+  "homepage": "https://github.com/signalwerk/signalwerk.documentation.md#readme",
+  "dependencies": {
+    "highlight.js": "^9.12.0",
+    "markdown-it": "^8.3.1",
+    "markdown-it-abbr": "^1.0.4",
+    "markdown-it-anchor": "^4.0.0",
+    "markdown-it-container": "^2.0.0",
+    "markdown-it-table-of-contents": "^0.3.2",
+    "markdown-it-attrs": "^0.9.0",
+    "markdown-it-deflist": "^2.0.2",
+    "markdown-it-footnote": "^3.0.1",
+    "markdown-it-include": "0.0.2",
+    "markdown-it-sub": "^1.0.0"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.24.1",
+    "babel-eslint": "^7.2.3",
+    "babel-preset-es2015": "^6.24.1",
+    "babel-preset-stage-0": "^6.24.1",
+    "eslint": "^3.19.0",
+    "eslint-config-airbnb-base": "^11.2.0",
+    "eslint-plugin-import": "^2.3.0"
+  },
+  "scripts": {
+    "start": "./node_modules/.bin/babel-node index.js",
+    "example": "./node_modules/.bin/babel-node example.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  }
+}
