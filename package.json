@@ -1,6 +1,6 @@
 {
   "name": "signalwerk.documentation.md",
-  "version": "0.0.6",
+  "version": "0.0.7",
   "description": "Markdown handler for documentations",
   "main": "build/index.js",
   "repository": {
