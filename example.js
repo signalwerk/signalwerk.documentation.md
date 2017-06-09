@@ -1,5 +1,5 @@
 import fs from 'fs';
-import SignalwerkDocMd from './index';
+import SignalwerkDocMd from './src/index';
 
 
 const md = `

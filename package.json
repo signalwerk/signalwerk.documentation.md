@@ -1,8 +1,8 @@
 {
   "name": "signalwerk.documentation.md",
-  "version": "0.0.1",
+  "version": "0.0.6",
   "description": "Markdown handler for documentations",
-  "main": "index.js",
+  "main": "build/index.js",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/signalwerk/signalwerk.documentation.md.git"
@@ -41,8 +41,10 @@
     "eslint-plugin-import": "^2.3.0"
   },
   "scripts": {
-    "start": "./node_modules/.bin/babel-node index.js",
+    "start": "./node_modules/.bin/babel-node ./src/index.js",
     "example": "./node_modules/.bin/babel-node example.js",
+    "build": "babel src --out-dir build ",
+    "npm:publish:next": "npm version patch && npm publish --tag next",
     "test": "echo \"Error: no test specified\" && exit 1"
   }
 }

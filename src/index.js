@@ -12,9 +12,26 @@ import MarkdownItSub from 'markdown-it-sub';
 import MarkdownItTOC from 'markdown-it-table-of-contents';
 import MarkdownItContainer from 'markdown-it-container';
 
-import MarkdownItReplaceLink from './src/replace-link';
-import MarkdownItReplaceExternalLink from './src/replace-external-link';
+import MarkdownItReplaceLink from './replace-link';
+import MarkdownItReplaceExternalLink from './replace-external-link';
 
+
+// the sourcecode highlighter
+const highlight = (str, lang) => {
+  if ((lang !== null) && hljs.getLanguage(lang)) {
+    try {
+      return hljs.highlight(lang, str).value;
+    } catch (_error) {
+      console.error(_error);
+    }
+  }
+  try {
+    return hljs.highlightAuto(str).value;
+  } catch (_error) {
+    console.error(_error);
+  }
+  return '';
+};
 
 class SignalwerkDocMd {
 
@@ -25,29 +42,11 @@ class SignalwerkDocMd {
         html: true,  // Enable HTML tags in source
         linkify: false, // Autoconvert URL-like text to links
         typographer: true, // Enable some language-neutral replacement + quotes beautification
-        highlight: this.highlight,  // the code highlighter
-        rootPath: './pages/', // root for includes !!!include(include.md)!!!
-
-        linkPrefix: './pages/', // prefix the links
+        highlight,  // the code highlighter
+        rootPath: null, // root for includes !!!include(include.md)!!!
+        linkPrefix: null, // prefix the links
       }, config,
     );
-  }
-
-  // the sourcecode highlighter
-  static highlight(str, lang) {
-    if ((lang !== null) && hljs.getLanguage(lang)) {
-      try {
-        return hljs.highlight(lang, str).value;
-      } catch (_error) {
-        console.error(_error);
-      }
-    }
-    try {
-      return hljs.highlightAuto(str).value;
-    } catch (_error) {
-      console.error(_error);
-    }
-    return '';
   }
 
   // function to prefix the links
