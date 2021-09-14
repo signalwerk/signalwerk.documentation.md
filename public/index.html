@@ -1,0 +1,49 @@
+<html lang="de">
+  <head>
+    <meta charset="utf-8" />
+    <title>{{process.content.frontmatter.title}}</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="{{process.content.frontmatter.description}}"
+    />
+    <!-- default styles -->
+    <link
+      rel="stylesheet"
+      href="https://rawcdn.githack.com/signalwerk/signalwerk.styles/de2666d/styles/main.critical.css"
+      media="all"
+    />
+    <link
+      rel="preload"
+      as="style"
+      onload="this.onload=null;this.rel='stylesheet'"
+      href="https://rawcdn.githack.com/signalwerk/signalwerk.styles/de2666d/styles/main.rest.css"
+      media="all"
+    />
+
+    <!-- custom styles -->
+    <link
+      rel="stylesheet"
+      href="{{process.file.root.path}}/styles/main.critical.css"
+      media="all"
+    />
+    <link
+      rel="preload"
+      as="style"
+      onload="this.onload=null;this.rel='stylesheet'"
+      href="{{process.file.root.path}}/styles/main.rest.css"
+      media="all"
+    />
+    <script src="{{process.file.root.path}}/index.js"></script>
+  </head>
+  <body>
+    {{#unless process.file.root.isRoot}}
+    <div class="navigation">
+      <div class="content navigation__content">
+        <a href="{{process.file.root.path}}">Home</a>
+      </div>
+    </div>
+    {{/unless}}
+    <article class="content">{{{process.content.body.html}}}</article>
+  </body>
+</html>

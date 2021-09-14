@@ -1,22 +1,25 @@
-## Introduction
-This is basically a wrapper for markdown-it and many extensions.
+# signalwerk.documentation.md
+
+A small publishing tool to get quickly and easy from an .md to .html file.
 
 ## Installation
-```shell
-npm install signalwerk.documentation.md --save
+
+```bash
+mkdir ./packages/
+git submodule add git@github.com:signalwerk/signalwerk.documentation.md.git ./packages/signalwerk.documentation.md
+
 ```
 
-## Use
-```js
-import SignalwerkDocMd from 'signalwerk.documentation.md';
 
-const md = `
-# Heading 1
-## Heading 2
 
-Hello World!
-`;
-const html = new SignalwerkDocMd().render(md);
-console.log(html);
-fs.writeFileSync('./index.html', html);
+### Individual CSS
+If `./src/main.css` exists, it will be included in the HTML.
+
+```css
+/* FILE ./src/main.css */
+
+
+@import "signalwerk.documentation.md/main.css"; /* default styles */
+
+/* your style here */
 ```
