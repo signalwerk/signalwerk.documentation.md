@@ -4,7 +4,6 @@ var marked = require("marked");
 var frontmatter = require("front-matter");
 var hljs = require("highlight.js");
 const Handlebars = require("handlebars");
-const { rootPath, mainPath } = require("./index");
 var mdReg = /\.md$/g;
 
 function changeExtension(file, extension) {

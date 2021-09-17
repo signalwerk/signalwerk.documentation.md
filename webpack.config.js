@@ -2,7 +2,7 @@ const path = require("path");
 const fs = require("fs");
 const webpack = require("webpack");
 const markdownPlugin = require("./webpack/md-to-html-plugin");
-const CopyWebpackPlugin = require("copy-webpack-plugin");
+// const CopyPlugin = require("copy-webpack-plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 
 // postcss plugins
@@ -120,8 +120,14 @@ module.exports = {
   },
 
   plugins: [
-    // new CopyWebpackPlugin([{ from: "content/assets", to: "assets" }]),
+    // new CopyWebpackPlugin([{ from: path.resolve(root, "static"), to: "/" }]),
 
+    // new CopyPlugin([
+    //   {
+    //     from: path.resolve(root, "static"),
+    //     to: "/", // copies all files to dist/assets
+    //   },
+    // ]),
     new MiniCssExtractPlugin({
       // Options similar to the same options in webpackOptions.output
       // both options are optional
