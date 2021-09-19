@@ -1,0 +1,30 @@
+{
+  "name": "{{package.name}}",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "start": "webpack-dev-server --config ./packages/signalwerk.documentation.md/webpack.config.js",
+    "deploy": "npm run build && gh-pages -d dist",
+    "build": "NODE_ENV=production webpack --config ./packages/signalwerk.documentation.md/webpack.config.js && cp ./static/CNAME ./dist",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+{{repository.url}}.git"
+  },
+  "keywords": [],
+  "author": "Stefan Huber",
+  "license": "ISC",
+  "bugs": {
+    "url": "{{repository.url}}/issues"
+  },
+  "homepage": "{{repository.url}}#readme",
+  "workspaces": [
+    "./packages/*"
+  ],
+  "devDependencies": {
+    "signalwerk.documentation.md": "file:packages/signalwerk.documentation.md"
+  }
+}

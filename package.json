@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "Content for publisher",
   "main": "index.js",
+  "type": "module",
   "scripts": {
     "start": "webpack-dev-server",
     "lint": "eslint --ext .js --ignore-path .gitignore .",

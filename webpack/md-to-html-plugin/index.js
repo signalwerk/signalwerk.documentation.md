@@ -17,7 +17,7 @@ const config = {
   build: { path: "./dist" },
   // exportPath: "./dist/",
   // isEncodeName: false, // if need to encode file name, like chinese
-  template: { path: "./public/index.html" },
+  template: { path: "./src/templates/default.html" },
 };
 
 function MarkdownPlugin(options) {

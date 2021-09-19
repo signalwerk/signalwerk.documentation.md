@@ -1,0 +1,5 @@
+{
+  "package": { "name": "{{key}}" },
+  "publish": { "domain": "{{key}}.signalwerk.ch" },
+  "repository": { "url": "https://github.com/signalwerk/{{key}}" }
+}
