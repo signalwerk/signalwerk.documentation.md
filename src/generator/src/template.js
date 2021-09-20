@@ -1,5 +1,5 @@
-import fs from "fs";
-import path from "path";
+const fs = require("fs");
+const path = require("path");
 
 /**
  * https://gist.github.com/signalwerk/eadabea1fc42795ed8af2882693d20e1
@@ -9,7 +9,7 @@ import path from "path";
  * @param {string|array} path
  * @returns {*} value if found otherwise undefined
  */
-export const get = (object, path) => {
+const get = (object, path) => {
   let parts = path;
   if (typeof path === "string" || typeof path === "number") {
     parts = `${path}`.split(/[\.\[\]\"\']{1,2}/).filter((part) => !!part);
@@ -29,13 +29,20 @@ const replace = (content, object) => {
   return newContent;
 };
 
-export function template(from, to, object) {
+function template(from, to, object) {
   const content = fs.readFileSync(from, { encoding: "utf8" });
   let newContent = replace(content, object);
   fs.writeFileSync(to, newContent);
 }
 
-// export const ROOT_PATH = path.resolve(path.dirname(import.meta.url), "../../../..");
-export const ROOT_PATH = path.resolve(
-  `/${path.dirname(import.meta.url).replace(/^file:\/\/\//, "")}/../../..`
+// ES6 module
+// const ROOT_PATH = path.resolve(
+//   `/${path.dirname(import.meta.url).replace(/^file:\/\/\//, "")}/../../..`
+// );
+const ROOT_PATH = path.resolve(
+  __dirname, `../../..`
 );
+
+exports.get = get;
+exports.template = template;
+exports.ROOT_PATH = ROOT_PATH;

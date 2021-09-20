@@ -23,7 +23,7 @@ const root = "./"; // __dirname
 
 let localCSSsearch = "./src/main.css";
 let localJSsearch = "./src/index.js";
-let packageCSS = "./packages/signalwerk.documentation.md/src/root.css";
+let packageCSS = "./packages/signalwerk.documentation.md/root.css";
 let rootCSS = packageCSS;
 
 const aliasSearch = path.resolve(__dirname, "src/");

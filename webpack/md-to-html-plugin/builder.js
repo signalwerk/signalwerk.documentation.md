@@ -3,7 +3,8 @@ var path = require("path");
 var marked = require("marked");
 var frontmatter = require("front-matter");
 var hljs = require("highlight.js");
-const Handlebars = require("handlebars");
+// const Handlebars = require("handlebars");
+
 var mdReg = /\.md$/g;
 
 function changeExtension(file, extension) {
@@ -38,7 +39,13 @@ function getFilesFromDir(dir, fileEnding) {
   return filesToReturn;
 }
 
-function buildHTML({ templateContent, contentPath, buildPath, compilation }) {
+function buildHTML({
+  templateContent,
+  contentPath,
+  buildPath,
+  compilation,
+  Handlebars,
+}) {
   // check if folder of content exists
   if (!fs.existsSync(contentPath)) {
     throw new Error(`Content folder doesn't exist (${contentPath})`);
@@ -69,6 +76,7 @@ function buildHTML({ templateContent, contentPath, buildPath, compilation }) {
       destinationPath,
       isRoot: relativePath === "index.md",
       contentPath,
+      Handlebars,
     });
   });
 }
@@ -79,6 +87,7 @@ function generateHTML({
   destinationPath,
   isRoot,
   contentPath,
+  Handlebars,
 }) {
   const mdContent = fs.readFileSync(mdFile, { encoding: "utf8" });
   const content = frontmatter(mdContent);
@@ -101,8 +110,16 @@ function generateHTML({
   const mdTemplate = Handlebars.compile(content.body);
 
   const body = marked(mdTemplate(data), {
+    // highlight: function (code, lang) {
+    //   return hljs.highlight(lang, code).value;
+    // },
+
     highlight: function (code, lang) {
-      return hljs.highlight(lang, code).value;
+      if (lang && hljs.getLanguage(lang)) {
+        return hljs.highlight(lang, code, true).value;
+      } else {
+        return hljs.highlightAuto(code).value;
+      }
     },
   });
 

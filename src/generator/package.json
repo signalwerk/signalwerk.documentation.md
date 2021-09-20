@@ -3,7 +3,6 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
-  "type": "module",
   "scripts": {
     "start": "webpack-dev-server --config ./packages/signalwerk.documentation.md/webpack.config.js",
     "deploy": "npm run build && gh-pages -d dist",

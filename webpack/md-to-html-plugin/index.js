@@ -7,6 +7,8 @@ const fs = require("fs");
 const path = require("path");
 
 const { buildHTML } = require("./builder");
+const { helpers } = require("./plugin/example");
+const Handlebars = require("handlebars");
 
 // var pluginPath = __dirname;
 var builderRootPath = path.resolve(__dirname, "../..");
@@ -31,6 +33,16 @@ function MarkdownPlugin(options) {
   );
 }
 
+// wow this is ugly...
+const plugin = helpers[0];
+Handlebars.registerHelper(plugin.name, (text, options) =>
+  plugin.hanlder(Handlebars, text, options)
+);
+
+// Handlebars.registerHelper("example", function (options) {
+//   return new Handlebars.SafeString('<div class="mybold">' + "</div>");
+// });
+
 MarkdownPlugin.prototype.apply = function (compiler) {
   compiler.plugin("emit", (compilation, callback) => {
     buildHTML({
@@ -38,6 +50,7 @@ MarkdownPlugin.prototype.apply = function (compiler) {
       contentPath: this.contentPath,
       buildPath: this.buildPath,
       compilation,
+      Handlebars,
     });
     callback();
   });

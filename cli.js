@@ -1,6 +1,6 @@
-import path from "path";
-import fs from "fs";
-import { template, get, ROOT_PATH } from "./src/generator/src/template.js";
+const fs = require("fs");
+const path = require("path");
+const { template, get, ROOT_PATH } = require("./src/generator/src/template.js");
 
 function config(key) {
   const from = path.resolve(ROOT_PATH, "src/generator/config.json");

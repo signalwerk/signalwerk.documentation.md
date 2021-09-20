@@ -8,14 +8,14 @@ A small publishing tool to get quickly and easy from an .md to .html file.
 mkdir ./packages/
 mkdir ./static/
 git submodule add git@github.com:signalwerk/signalwerk.documentation.md.git ./packages/signalwerk.documentation.md
-node ./packages/signalwerk.documentation.md/cli.mjs setup webtypo
+node ./packages/signalwerk.documentation.md/cli.js setup webtypo
 npm install
 ```
 
 ### Update build based on config.json
 
 ```bash
-node ./packages/signalwerk.documentation.md/cli.mjs update
+node ./packages/signalwerk.documentation.md/cli.js update
 ```
 
 
