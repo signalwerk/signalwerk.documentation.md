@@ -1,5 +1,8 @@
 # signalwerk.documentation.md
 
+FONT!!!
+prism !! https://gist.github.com/lightpohl/f7786afa86ff2901ef40b1b1febf14e0
+
 A small publishing tool to get quickly and easy from an .md to .html file.
 
 ## Installation
@@ -18,15 +21,31 @@ npm install
 node ./packages/signalwerk.documentation.md/cli.js update
 ```
 
-
 ### Individual CSS
+
 If `./src/main.css` exists, it will be included in the HTML.
 
 ```css
 /* FILE ./src/main.css */
 
-
 @import "signalwerk.documentation.md/main.css"; /* default styles */
 
 /* your style here */
 ```
+
+## Handlebars helpers
+
+### Date
+
+Under the hood [dateformat](https://www.npmjs.com/package/dateformat) is used.
+
+```md
+- Today: {{date}} → default format = `d. m. yyyy`, default value = `now`
+- This year: {{date format='yyyy'}} → default value = `now`
+- Selected date: {{date '1995-08-24' format='dd. mm. yyyy hh:mm:ss'}}
+```
+
+
+## Usage
+* [IAD2021](https://iad2021.signalwerk.ch/)
+* [Webtypo](https://webtypo.signalwerk.ch/)
