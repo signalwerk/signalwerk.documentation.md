@@ -7,7 +7,8 @@ const fs = require("fs");
 const path = require("path");
 
 const { buildHTML } = require("./builder");
-const { helpers } = require("./plugin/example");
+const { helpers: exampleHelper } = require("./plugin/example");
+const { helpers: dateHelper } = require("./plugin/date");
 const Handlebars = require("handlebars");
 
 // var pluginPath = __dirname;
@@ -34,9 +35,10 @@ function MarkdownPlugin(options) {
 }
 
 // wow this is ugly...
-const plugin = helpers[0];
-Handlebars.registerHelper(plugin.name, (text, options) =>
-  plugin.hanlder(Handlebars, text, options)
+[...exampleHelper, ...dateHelper].forEach((plugin) =>
+  Handlebars.registerHelper(plugin.name, (text, options) =>
+    plugin.hanlder(Handlebars, text, options)
+  )
 );
 
 // Handlebars.registerHelper("example", function (options) {
