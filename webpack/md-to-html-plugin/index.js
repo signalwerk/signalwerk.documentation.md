@@ -9,6 +9,7 @@ const path = require("path");
 const { buildHTML } = require("./builder");
 const { helpers: exampleHelper } = require("./plugin/example");
 const { helpers: dateHelper } = require("./plugin/date");
+const { helpers: jsonHelper } = require("./plugin/json");
 const Handlebars = require("handlebars");
 
 // var pluginPath = __dirname;
@@ -35,9 +36,13 @@ function MarkdownPlugin(options) {
 }
 
 // wow this is ugly...
-[...exampleHelper, ...dateHelper].forEach((plugin) =>
-  Handlebars.registerHelper(plugin.name, (text, options) =>
-    plugin.hanlder(Handlebars, text, options)
+[...exampleHelper, ...dateHelper, ...jsonHelper].forEach((plugin) =>
+  Handlebars.registerHelper(plugin.name, (context, options) =>
+    plugin.hanlder(
+      { Handlebars, config: { builderRootPath, rootPath } },
+      context,
+      options
+    )
   )
 );
 

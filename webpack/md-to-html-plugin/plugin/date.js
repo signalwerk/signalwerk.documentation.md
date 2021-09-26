@@ -4,7 +4,7 @@ function isValidDate(d) {
   return d instanceof Date && !isNaN(d);
 }
 
-function dateHelper(Handlebars, paramOne, paramTwo) {
+function dateHelper({ Handlebars }, paramOne, paramTwo) {
   let value = new Date();
   var format = "d. m. yyyy";
 

@@ -95,9 +95,15 @@ function generateHTML({
   const data = {
     process: {
       file: {
-        root: {
-          isRoot,
-          path: path.relative(path.dirname(mdFile), contentPath),
+        isRoot,
+        path: {
+          absolute: {
+            file: mdFile,
+            folder: path.dirname(mdFile),
+          },
+          relative: {
+            toRoot: path.relative(path.dirname(mdFile), contentPath),
+          },
         },
       },
       content: {

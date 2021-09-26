@@ -42,10 +42,10 @@
     <script src="{{process.file.root.path}}/index.js"></script>
   </head>
   <body>
-    {{#unless process.file.root.isRoot}}
+    {{#unless process.file.isRoot}}
     <div class="navigation">
       <div class="content navigation__content">
-        <a href="{{process.file.root.path}}">Home</a>
+        <a href="{{process.file.path.relative.toRoot}}">Home</a>
       </div>
     </div>
     {{/unless}}

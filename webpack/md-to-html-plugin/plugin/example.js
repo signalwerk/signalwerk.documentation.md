@@ -31,7 +31,7 @@ const tokenize = (charDelim, charEsc, str) => {
   return list.concat(token);
 };
 
-function example(Handlebars, text, options) {
+function example({ Handlebars }, text, options) {
   let markers = tokenize(",", "\\", options.hash.marker).map((item) =>
     item.split("=").map((item) => item.trim())
   );
