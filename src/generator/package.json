@@ -7,6 +7,7 @@
     "start": "webpack-dev-server --config ./packages/signalwerk.documentation.md/webpack.config.js",
     "deploy": "npm run build && gh-pages -d dist",
     "build": "NODE_ENV=production webpack --config ./packages/signalwerk.documentation.md/webpack.config.js && cp ./static/CNAME ./dist",
+    "update": "node ./packages/signalwerk.documentation.md/cli.js update",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
