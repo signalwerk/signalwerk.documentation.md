@@ -45,6 +45,11 @@ Under the hood [dateformat](https://www.npmjs.com/package/dateformat) is used.
 - Selected date: {{date '1995-08-24' format='dd. mm. yyyy hh:mm:ss'}}
 ```
 
+If you like to escape text in the format use `"{{text}}"`: 
+
+```md
+{{date '2021-09-18' format='yyyy · "KW" W'}} → 2021 · KW 37 
+```
 
 ## Usage
 * [IAD2021](https://iad2021.signalwerk.ch/)
