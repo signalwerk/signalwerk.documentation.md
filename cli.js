@@ -18,6 +18,11 @@ function CNAME(object) {
   const to = path.resolve("./static/CNAME");
   template(from, to, object);
 }
+function CI(object) {
+  const from = path.resolve(ROOT_PATH, "src/generator/.drone.yml");
+  const to = path.resolve("./.drone.yml");
+  template(from, to, object);
+}
 
 if (process.argv) {
   const mode = get(process.argv, 2);
@@ -36,5 +41,6 @@ if (process.argv) {
     );
     pkg(object);
     CNAME(object);
+    CI(object);
   }
 }
