@@ -18,7 +18,7 @@ npm install
 ### Update build based on config.json
 
 ```bash
-node ./packages/signalwerk.documentation.md/cli.js update
+npm run update
 ```
 
 ### Individual CSS
