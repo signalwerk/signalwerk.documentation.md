@@ -13,6 +13,11 @@ function pkg(object) {
   const to = path.resolve("./package.json");
   template(from, to, object);
 }
+function nvm(object) {
+  const from = path.resolve(ROOT_PATH, "src/generator/.nvmrc");
+  const to = path.resolve("./.nvmrc");
+  template(from, to, object);
+}
 function CNAME(object) {
   const from = path.resolve(ROOT_PATH, "src/generator/static/CNAME");
   const to = path.resolve("./static/CNAME");
@@ -29,9 +34,9 @@ if (process.argv) {
 
   if (mode === "setup") {
     const key = get(process.argv, 3);
-
     config(key);
     pkg();
+    nvm();
   }
   if (mode === "update") {
     const object = JSON.parse(
@@ -40,6 +45,7 @@ if (process.argv) {
       })
     );
     pkg(object);
+    nvm(object);
     CNAME(object);
     CI(object);
   }
