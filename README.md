@@ -54,3 +54,6 @@ If you like to escape text in the format use `"{{text}}"`:
 ## Usage
 * [IAD2021](https://iad2021.signalwerk.ch/)
 * [Webtypo](https://webtypo.signalwerk.ch/)
+
+## Todo
+* [Switch Date-Format to `date-fns`](https://github.com/date-fns/date-fns)
