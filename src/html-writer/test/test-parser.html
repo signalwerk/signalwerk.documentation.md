@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="en" class="template--document">
+  <head>
+    <meta charset="utf-8" />
+    <title>Main Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Subline and short introduction" />
+
+    <!-- add fonts styles -->
+    <link rel="preconnect" href="https://fonts.signalwerk.ch" />
+    <link
+      href="https://fonts.signalwerk.ch/css/latest/family=Open+Sans:ital,wght@0,300..800;1,300..800.css"
+      rel="stylesheet"
+    />
+
+    <!-- custom styles -->
+    <link
+      rel="stylesheet"
+      href="http://signalwerk.styles.local.signalwerk.ch:8081/blog.critical.css"
+      media="all"
+    />
+    <link
+      rel="preload"
+      as="style"
+      onload="this.onload=null;this.rel='stylesheet'"
+      href="http://signalwerk.styles.local.signalwerk.ch:8081/blog.rest.css"
+      media="all"
+    />
+  </head>
+  <body class="body">
+    <main>
+      <!-- html:children:start -->
+
+      <article class="document">
+        <header class="header">
+          <div class="header__inner">
+            <h1 class="header__title">Main Title</h1>
+            <p class="header__subline">Subline and short introduction</p>
+            <p class="header__info">
+              Stefan Huber · September 21, 2025 · additional information
+            </p>
+          </div>
+        </header>
+
+        <!-- document:children:start -->
+
+        <div class="document__item">
+          <section class="collection">
+            <!-- collection:children:start -->
+
+            <div class="markdown">
+              <div class="markdown__inner">
+                <h2>Text with link</h2>
+                <p>
+                  This is a link:
+                  <a
+                    href="https://github.com/keeweb/keeweb/wiki/Plugins"
+                    target="_blank"
+                    rel="nofollow"
+                    >link</a
+                  >↗ in text
+                </p>
+                <hr />
+                <h2>Numbered List</h2>
+                <ol>
+                  <li>
+                    Item 1
+                    <ol>
+                      <li>Item 1</li>
+                      <li>Item 2</li>
+                      <li>Item 3</li>
+                    </ol>
+                  </li>
+                  <li>Item 2</li>
+                  <li>Item 3</li>
+                </ol>
+                <h2>Unordered List</h2>
+                <ul>
+                  <li>
+                    Item 1
+                    <ul>
+                      <li>Item 1.1</li>
+                      <li>Item 1.2</li>
+                      <li>Item 1.3</li>
+                    </ul>
+                  </li>
+                  <li>Item 2</li>
+                  <li>Item 3</li>
+                </ul>
+                <h2>Code highlighting</h2>
+                <h3>Inline</h3>
+                <p>Inline <code>code</code></p>
+                <h3>Block</h3>
+                <pre><code class="hljs language-css"><span class="hljs-keyword">@font-face</span> {
+  <span class="hljs-attribute">font-family</span>: <span class="hljs-string">"Open Sans"</span>;
+  <span class="hljs-attribute">src</span>: <span class="hljs-built_in">url</span>(<span class="hljs-string">"opensans-reg-web.woff2"</span>) <span class="hljs-built_in">format</span>(<span class="hljs-string">"woff2"</span>), <span class="hljs-comment">/* Modern Browsers */</span>
+      <span class="hljs-built_in">url</span>(<span class="hljs-string">"opensans-reg-web.woff"</span>) <span class="hljs-built_in">format</span>(<span class="hljs-string">"woff"</span>);
+  <span class="hljs-attribute">font-weight</span>: normal;
+  <span class="hljs-attribute">font-style</span>: normal;
+  unicode-range: U+<span class="hljs-number">000</span>-<span class="hljs-number">5</span>FF; <span class="hljs-comment">/* Latin glyphs */</span>
+}
+
+<span class="hljs-keyword">@font-face</span> {
+  <span class="hljs-attribute">font-family</span>: <span class="hljs-string">"Open Sans"</span>;
+  <span class="hljs-attribute">src</span>: <span class="hljs-built_in">url</span>(<span class="hljs-string">"special-web.woff2"</span>) <span class="hljs-built_in">format</span>(<span class="hljs-string">"woff2"</span>), <span class="hljs-comment">/* Modern Browsers */</span>
+      <span class="hljs-built_in">url</span>(<span class="hljs-string">"special-web.woff"</span>) <span class="hljs-built_in">format</span>(<span class="hljs-string">"woff"</span>);
+  <span class="hljs-attribute">font-weight</span>: normal;
+  <span class="hljs-attribute">font-style</span>: normal;
+  unicode-range: U+<span class="hljs-number">0061</span>; <span class="hljs-comment">/* overwrite for letter a */</span>
+}
+
+<span class="hljs-selector-tag">p</span> {
+  <span class="hljs-attribute">font-family</span>: <span class="hljs-string">"Open Sans"</span>, Arial, Helvetica, sans-serif;
+}
+</code></pre>
+                <h2>Quote</h2>
+                <blockquote>
+                  <p>Standing on the soulders of giants.</p>
+                </blockquote>
+                <h1>H1</h1>
+                <h2>H2</h2>
+                <h3>H3</h3>
+                <p>Test</p>
+
+                <table>
+                  <thead>
+                    <tr>
+                      <th>Numbers</th>
+                      <th>Text</th>
+                      <th>Findet</th>
+                      <th>Erklärung</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>1111111</td>
+                      <td>Hallo.</td>
+                      <td>a</td>
+                      <td>
+                        Das <code>a</code> ist ein Zeichen ohne spezieller
+                        Funktion und wird somit auch im Text gefunden
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>9999999</td>
+                      <td>Hallo.</td>
+                      <td>a</td>
+                      <td>
+                        Zeichen können auch als Unicode-Wert angegeben werden
+                        (<code>U+0060</code> = <code>a</code>)
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>1111111</td>
+                      <td>Ja.</td>
+                      <td>J, a, .</td>
+                      <td>
+                        Der Punkt dient als Platzhalter für alle Zeichen. Somit
+                        werden alle Zeichen gefunden.
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>1111111</td>
+                      <td>Rauch<br />Bauch<br />auch</td>
+                      <td>Rauch<br />Bauch</td>
+                      <td>
+                        Das Platzhalter Zeichen (<code>.</code>) findet sowohl
+                        ein <code>R</code>, wie auch ein <code>B</code>. Das
+                        Wort <code>auch</code> wird jedoch nicht gefunden, da
+                        das Platzhalterzeichen nicht gefüllt werden kann.
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>1111111</td>
+                      <td>Hallo.</td>
+                      <td>.</td>
+                      <td>
+                        Möchte man lediglich einen Punkt suchen, so wird dieser
+                        als <code>\.</code> gesucht.
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>1111111</td>
+                      <td>\o/</td>
+                      <td>\</td>
+                      <td>Back-Slash wird mit <code>\\</code> gefunden.</td>
+                    </tr>
+                  </tbody>
+                </table>
+                <h2>custom styling inside markdown</h2>
+                <style>
+                  .test {
+                    background-color: green;
+                  }
+                  .test span {
+                    color: red;
+                  }
+                </style>
+                <div class="test">
+                  <h2>green <span>title</span></h2>
+                </div>
+                <h2>Grid</h2>
+                <h3>12 columns</h3>
+              </div>
+            </div>
+
+            <div class="grid" style="--grid-columns-count: 12">
+              <div class="grid__inner">
+                <div class="item">
+                  <div class="markdown">
+                    <div class="markdown__inner"><p>1 column</p></div>
+                  </div>
+                </div>
+
+                <div class="item">
+                  <div class="markdown">
+                    <div class="markdown__inner"><p>1 column</p></div>
+                  </div>
+                </div>
+
+                <div class="item">
+                  <div class="markdown">
+                    <div class="markdown__inner"><p>1 column</p></div>
+                  </div>
+                </div>
+
+                <div class="item">
+                  <div class="markdown">
+                    <div class="markdown__inner"><p>1 column</p></div>
+                  </div>
+                </div>
+
+                <div class="item" style="--grid-item-column--span: 4">
+                  <div class="markdown">
+                    <div class="markdown__inner">
+                      <p>four columns with image</p>
+                      <p>
+                        <img
+                          src="https://i.picsum.photos/id/1061/1600/800.jpg?hmac=MgVXam7p1UDLMq6oZ6kEaIwNoX6FtBEhmDpUJP_RNRU"
+                          alt="Test"
+                        />
+                      </p>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="item" style="--grid-item-column--span: 4">
+                  <div class="markdown">
+                    <div class="markdown__inner">
+                      <p>four columns with image</p>
+                      <p>
+                        <img
+                          src="https://i.picsum.photos/id/1061/1600/800.jpg?hmac=MgVXam7p1UDLMq6oZ6kEaIwNoX6FtBEhmDpUJP_RNRU"
+                          alt="Test"
+                        />
+                      </p>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="item" style="--grid-item-column--span: 4">
+                  <div class="markdown">
+                    <div class="markdown__inner">
+                      <p>four columns with image</p>
+                      <p>
+                        <img
+                          src="https://i.picsum.photos/id/1061/1600/800.jpg?hmac=MgVXam7p1UDLMq6oZ6kEaIwNoX6FtBEhmDpUJP_RNRU"
+                          alt="Test"
+                        />
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="markdown">
+              <div class="markdown__inner"><h3>2 columns</h3></div>
+            </div>
+
+            <div class="grid" style="--grid-columns-count: 2">
+              <div class="grid__inner">
+                <div class="item">
+                  <div class="markdown">
+                    <div class="markdown__inner"><p>1 column</p></div>
+                  </div>
+                </div>
+
+                <div class="item">
+                  <div class="markdown">
+                    <div class="markdown__inner"><p>1 column</p></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- collection:children:end -->
+          </section>
+        </div>
+
+        <!-- document:children:end -->
+      </article>
+
+      <!-- html:children:end -->
+    </main>
+  </body>
+</html>
