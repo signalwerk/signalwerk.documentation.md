@@ -147,14 +147,6 @@ four columns with image
 
 </item>
 
-<item span="4">
-
-four columns with image
-
-![Test](https://i.picsum.photos/id/1061/1600/800.jpg?hmac=MgVXam7p1UDLMq6oZ6kEaIwNoX6FtBEhmDpUJP_RNRU)
-
-</item>
-
 </grid>
 
 ### 2 columns

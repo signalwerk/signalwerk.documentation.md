@@ -15,9 +15,13 @@ const config = {
 // var builderRootPath = path.resolve(__dirname, "../..");
 // var dataRootPath = path.resolve(builderRootPath, "../..");
 
-var builderRootPath = path.resolve(__dirname, "../..");
-var dataRootPath = path.resolve(builderRootPath, ".");
+let builderRootPath = path.resolve(__dirname, "../..");
 
+if (process.env.AS_PACKAGE) {
+  builderRootPath = path.resolve(__dirname, "../../../../");
+}
+
+var dataRootPath = path.resolve(builderRootPath, ".");
 const contentPath = path.join(dataRootPath, config.content.path);
 const buildPath = path.join(dataRootPath, config.build.path);
 

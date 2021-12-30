@@ -28,18 +28,24 @@ const __dirname = dirname(__filename);
 
 const isProduction = process.env.NODE_ENV === "production";
 
+let rootPath = __dirname;
+
+if (process.env.AS_PACKAGE) {
+  rootPath = resolve(__dirname, "../../");
+}
+
 const settings = {
   // webpack optimization mode
   mode: process.env.NODE_ENV ? process.env.NODE_ENV : "development",
 
   // entry file(s)
   entry: {
-    root: ["./root.css"],
+    root: [resolve(rootPath, "./root.css")],
   },
 
   // output file(s) and chunks
   output: {
-    path: resolve(__dirname, "dist"),
+    path: resolve(rootPath, "dist"),
     // filename: "index.js",
     publicPath: "/",
   },

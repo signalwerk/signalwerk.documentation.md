@@ -2,8 +2,6 @@ import fs from "fs";
 import path, { dirname, resolve } from "path";
 import { fileURLToPath } from "url";
 
-import { template, get, ROOT_PATH } from "./src/generator/src/template.js";
-
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
@@ -36,17 +34,19 @@ function replace(content, object) {
 }
 
 function template(filename, object) {
-  const from = path.resolve(__dirname, `/${filename}`);
-  const to = path.resolve(`../../${filename}`);
+  const from = path.resolve(__dirname, `./${filename}`);
+  const to = path.resolve(__dirname, `../../../../${filename}`);
+  fs.mkdirSync(path.dirname(to), { recursive: true });
 
   const content = fs.readFileSync(from, { encoding: "utf8" });
   let newContent = replace(content, object);
   fs.writeFileSync(to, newContent);
 }
 
-function copy(filename) {
-  const from = path.resolve(__dirname, `/${filename}`);
-  const to = path.resolve(`../../${filename}`);
+function copy(filename, toFilename) {
+  const from = path.resolve(__dirname, `./${filename}`);
+  const to = path.resolve(__dirname, `../../../../${toFilename || filename}`);
+  fs.mkdirSync(path.dirname(to), { recursive: true });
 
   fs.copyFileSync(from, to);
 }
@@ -64,6 +64,11 @@ function pkg(object) {
   template("./package.json", object);
   copy(".gitignore");
 }
+
+function example() {
+  copy("../../content/index.md", "./content/index.md");
+}
+
 function nvm(object) {
   template("./.nvmrc", object);
 }
@@ -80,6 +85,8 @@ if (process.argv) {
   if (mode === "setup") {
     const key = get(process.argv, 3);
     config(key);
+    example();
+    copy("root.css");
   }
   if (mode === "setup" || mode === "update") {
     const object = JSON.parse(fs.readFileSync(path.resolve("./config.json")));
