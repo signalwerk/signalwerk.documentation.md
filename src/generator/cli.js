@@ -76,7 +76,7 @@ function CNAME(object) {
   template("./static/CNAME", object);
 }
 function CI(object) {
-  template("./.drone.yml", object);
+  // template("./.drone.yml", object);
 }
 
 if (process.argv) {
