@@ -1,0 +1,9 @@
+:root {
+  --grid-column--grid-column--count: 1;
+}
+
+.grid-column {
+  grid-column: span var(--grid-column--grid-column--count);
+  /* width: 100%; */
+  /* overflow: hidden; */
+}

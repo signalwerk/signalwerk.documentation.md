@@ -1,0 +1,324 @@
+backend:
+  name: git-gateway
+
+# when using the default proxy server port
+local_backend: true
+# local_backend:
+#   # when using a custom proxy server port
+#   url: http://localhost:8082/api/v1
+#   # when accessing the local site from a host other than 'localhost' or '127.0.0.1'
+#   allowed_hosts: ['192.168.0.1']
+
+# backend:
+#   name: test-repo
+site_url: "https://tst.org/"
+media_folder: assets/uploads
+# media_library:
+#   name: uploadcare
+#   folder_support: true
+locale: en
+i18n:
+  # Required and can be one of multiple_folders, multiple_files or single_file
+  # multiple_folders - persists files in `<folder>/<locale>/<slug>.<extension>`
+  # multiple_files - persists files in `<folder>/<slug>.<locale>.<extension>`
+  # single_file - persists a single file in `<folder>/<slug>.<extension>`
+  structure: multiple_files
+
+  # Required - a list of locales to show in the editor UI
+  locales: [en, de, fr]
+
+  # Optional, defaults to the first item in locales.
+  # The locale to be used for fields validation and as a baseline for the entry.
+  defaultLocale: en
+
+# define Anchor for all types
+# can be used with *base (Alias)
+types:
+  text: &text
+    label: Text
+    name: text
+    widget: object
+    fields:
+      - label: Body
+        name: body
+        widget: markdown
+        required: false
+        show_raw: true
+      - label: Class
+        name: class
+        widget: string
+        required: false
+
+  media: &media
+    label: Media Items
+    label_singular: Media Item
+    name: mediaItems
+    widget: object
+    fields:
+      - label: Media Item
+        name: children
+        widget: list
+        required: false
+        fields:
+          - label: Image
+            name: path
+            widget: image
+            required: false
+            # multiple: true
+          - label: Caption per Image
+            name: caption
+            widget: string
+            required: false
+          # - name: type
+          #   label: type
+          #   widget: text
+          #   default: image
+          #   required: false
+      - label: Caption for all media items
+        name: caption
+        widget: string
+        required: false
+      - label: Class
+        name: class
+        widget: string
+        required: false
+  refPage: &refPage
+    label: Page reference
+    name: ref_page
+    widget: object
+    fields:
+      - name: selectionType
+        label: Type
+        widget: select
+        options:
+          - value: all
+            label: All
+          - value: selection
+            label: Selection
+      - label: "Selection"
+        name: "pages"
+        widget: "relation"
+        multiple: true
+        collection: "pages"
+        search_fields: ["title", "path"]
+        display_fields: ["title", "· {{path}}"]
+        value_field: "path"
+        condition:
+          field: selectionType
+          value: selection
+
+# define Anchor for all types
+# can be used with *base (Alias)
+base: &base
+  - *text
+  - *media
+  - *refPage
+
+grid: &grid
+  label: Grid
+  name: grid
+  widget: object
+  fields:
+    - label: Column
+      name: children
+      widget: list
+      required: false
+      fields:
+        # - label: Width
+        #   name: cols
+        #   widget: string
+        #   required: false
+        - name: cols
+          label: Width
+          widget: select
+          required: false
+          options:
+            - value: 1
+              label: col 1
+            - value: 2
+              label: col 2
+            - value: 3
+              label: col 3
+            - value: 4
+              label: col 4
+            - value: 5
+              label: col 5
+            - value: 6
+              label: col 6
+            - value: 7
+              label: col 7
+            - value: 8
+              label: col 8
+            - value: 9
+              label: col 9
+            - value: 10
+              label: col 10
+            - value: 11
+              label: col 11
+            - value: 12
+              label: col 12
+        - label: Column Content
+          name: children
+          # widget: list
+          widget: list
+          types: *base
+          required: false
+
+    - label: Grid Class
+      name: class
+      widget: string
+      required: false
+
+baseExtended: &baseExtended
+  - *grid
+  # ---- base from here
+  - *text
+  - *media
+  - *refPage
+
+collections:
+  - name: pages
+    label: Pages
+    format: json
+    label_singular: Page
+    description: >
+      Page
+    folder: content
+    slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
+    summary_fields:
+      - title
+      - date
+      - draft
+    # sortable_fields:
+    #   fields:
+    #     - title
+    #     - date
+    #   default:
+    #     field: title
+    create: true
+    # view_filters:
+    #   - label: Pages With Index
+    #     field: title
+    #     pattern: "This is post #"
+    #   - label: Pages Without Index
+    #     field: title
+    #     pattern: front matter post
+    #   - label: Drafts
+    #     field: draft
+    #     pattern: true
+    # view_groups:
+    #   - label: Year
+    #     field: date
+    #     pattern: '\d{4}'
+    #   - label: Drafts
+    #     field: draft
+    # nested:
+    #   depth: 100 # max depth to show in the collection tree
+    #   summary: '{{title}}' # optional summary for a tree node, defaults to the inferred title field
+    #   # adding a path object allows editing the path of entries
+    #   # moving an existing entry will move the entire sub tree of the entry to the new location
+    #   path: { label: 'Path', index_file: 'index' }
+
+    fields:
+      - label: Title
+        name: title
+        widget: string
+      - label: Path
+        name: path
+        widget: string
+        # required: false
+      - label: Draft
+        name: draft
+        widget: boolean
+        default: false
+      - label: Publish Date
+        name: date
+        widget: datetime
+        date_format: yyyy-MM-dd
+        time_format: "HH:mm"
+        format: "yyyy-MM-dd'T'HH:mm:ss.SSSXXX"
+      - label: Cover Image
+        name: image
+        widget: image
+        required: false
+      - label: Description
+        name: description
+        widget: string
+        required: false
+      # - label: Body
+      #   name: body
+      #   widget: markdown
+      #   hint: Main content goes here.
+      - name: content
+        label: Content
+        widget: list
+        required: false
+        # types: *base
+        types:
+          *baseExtended
+
+  # =================================================================================================
+  # =================================================================================================
+
+  - name: settings
+    label: Settings
+    delete: false
+    editor:
+      preview: false
+    files:
+      - name: general
+        label: Site Settings
+        file: _data/settings.json
+        description: General Site Settings
+        fields:
+          - label: Number of posts on frontpage
+            name: front_limit
+            widget: number
+            min: 1
+            max: 10
+          - label: Global title
+            name: site_title
+            widget: string
+          - label: Post Settings
+            name: posts
+            widget: object
+            fields:
+              - label: Number of posts on frontpage
+                name: front_limit
+                widget: number
+                min: 1
+                max: 10
+              - label: Default Author
+                name: author
+                widget: string
+              - label: Default Thumbnail
+                name: thumb
+                widget: image
+                required: false
+      - name: authors
+        label: Authors
+        file: _data/authors.yml
+        description: Author descriptions
+        editor:
+          preview: true
+        fields:
+          - name: authors
+            label: Authors
+            label_singular: Author
+            widget: list
+            fields:
+              - label: Name
+                name: name
+                widget: string
+                hint: First and Last
+              - label: Description
+                name: description
+                widget: text
+  # =================================================================================================
+  # =================================================================================================
+  # =================================================================================================
+  # =================================================================================================
+  # =================================================================================================
+  # =================================================================================================
+  # =================================================================================================
+  # =================================================================================================
