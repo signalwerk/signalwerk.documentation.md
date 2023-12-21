@@ -1,50 +1,33 @@
-import { getFilesFromDir } from "./getFilesFromDir.js";
-import path, { join, dirname, resolve } from "path";
-import fs from "fs";
-import { fileURLToPath } from "url";
+import React from "react";
+import useFetch from "./utils/useFetch"; // adjust the path as necessary
+import { typeProcessor } from "../../signalwerk.documentation.md/src/components";
 
-// const __filename = fileURLToPath(import.meta.url);
+// import React from "react";
+// import ReactDOM from "react-dom";
+import { hydrateRoot } from "react-dom/client";
 
-// const __dirname = dirname(fileURLToPath(import.meta.url));
+const App = () => {
+  const path = window.location.pathname;
 
-// Get the file URL of the current module
-// const __filename = fileURLToPath(import.meta.url);
+  // Replace 'your-api-url' with the actual URL
+  const { data, loading, error } = useFetch(`/api/${path}/index.json`);
 
-// // Get the directory name of the current module
-// const __dirname = dirname(__filename);
+  if (loading) return <div>Loading...</div>;
+  if (error) return <div>Error: {error}</div>;
 
-export const pagePath = getFilesFromDir("../../content", ".json");
-export const slugs = [];
-
-export const config = {
-  slugs: [],
-  data: {},
+  return <>{typeProcessor(data)}</>;
 };
 
-pagePath.forEach((originalPath) => {
-  const data = {
-    path: originalPath,
-    slug: null,
-    file: {
-      content: null,
-      data: null,
-    },
-  };
+// This is a basic example and can be expanded based on your application's needs.
 
-  data.file.content = fs.readFileSync(join(".", `${originalPath}`), "utf-8");
-  data.file.data = JSON.parse(data.file.content);
+const Main = () => (
+  <React.StrictMode>
+    <App /> {/* Your main App component */}
+  </React.StrictMode>
+);
 
-  let slug = data.file.data.path;
-  if (!slug) {
-    const pathComponents = originalPath.split(path.sep).slice(1); // Skip the first folder
-    slug = pathComponents.join(path.sep).slice(0, -5); // Construct the slug without file ending
-  }
+// In a typical client-side setup, you would use ReactDOM.render.
+// For server-side rendering, this file is bundled and run through a server rendering process.
+const container = document.getElementById("root");
 
-  console.log({ slug });
-  data.file.data.slug = slug;
-  config.data[slug] = data;
-
-  config.slugs.push(slug);
-});
-
-console.log("finish index");
+const root = hydrateRoot(container, <Main />);

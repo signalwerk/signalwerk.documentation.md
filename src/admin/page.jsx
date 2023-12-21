@@ -1,12 +1,11 @@
 import { typeProcessor } from "../components/index.jsx";
-import "./page.css";
 
 const Page = ({ entry }) => {
   const data = entry.getIn(["data"]).toJS();
-  const content = data?.content;
-
+  const content = data?.children;
   return (
     <div className="page">
+      content: {content?.length}
       {content?.map((item, index) => {
         return <div key={index}>{typeProcessor(item)}</div>;
       })}

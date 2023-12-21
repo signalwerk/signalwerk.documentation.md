@@ -2,11 +2,14 @@
   "name": "signalwerk.documentation.md",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "--main": "index.js",
   "bin": {
     "sdm": "./cli/index.js"
   },
   "scripts": {
+    "start": "concurrently 'npm run start:git' 'npm run start:parcel'",
+    "start:parcel": "parcel",
+    "start:git": "npx decap-server",
     "admin": "concurrently 'npm run admin:git' 'npm run admin:parcel' 'sleep 2 && npm run admin:update-css'",
     "admin:git": "npx decap-server",
     "admin:parcel": "parcel ./src/admin/index.html",
@@ -18,18 +21,29 @@
     "copy:current2package": "while read -r file; do cp \"../../$file\" \"./template/$file\"; done < ./template/.copy",
     "copy:package2current": "while read -r file; do cp \"./template/$file\" \"../../$file\"; done < ./template/.copy"
   },
+  "targets": {
+    "site": {
+      "source": "src/index.html",
+      "distDir": "docs/",
+      "publicUrl": "../"
+    },
+    "admin": {
+      "source": "src/admin/index.html",
+      "distDir": "docs/admin/",
+      "publicUrl": "../"
+    }
+  },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "@parcel/transformer-yaml": "^2.10.3",
     "concurrently": "^8.2.2",
     "express": "^4.18.2",
     "parcel": "^2.8.3",
     "process": "^0.11.10"
   },
   "dependencies": {
-    "react-helmet": "^6.1.0",
-    "react": "^17.0.0",
     "@fsoc/dhow": "github:fs-c/dhow",
     "buffer": "^6.0.3",
     "decap-cms-app": "^3.0.12",
@@ -44,6 +58,9 @@
     "micromark-extension-gfm-task-list-item": "^1.0.5",
     "micromark-util-combine-extensions": "^1.1.0",
     "nodemon": "^3.0.1",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-helmet": "^6.1.0",
     "rehype-external-links": "^1.0.1",
     "rehype-highlight": "^5.0.2",
     "rehype-raw": "^6.1.1",
