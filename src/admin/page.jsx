@@ -5,7 +5,6 @@ const Page = ({ entry }) => {
   const content = data?.children;
   return (
     <div className="page">
-      content: {content?.length}
       {content?.map((item, index) => {
         return <div key={index}>{typeProcessor(item)}</div>;
       })}

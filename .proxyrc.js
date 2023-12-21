@@ -65,7 +65,7 @@ const root = (app) => {
   );
 
   // Serve the assets directory
-  app.use("/public", express.static(path.join(mainRoot, "public")));
+  app.use("/assets", express.static(path.join(mainRoot, "public/assets")));
 };
 
 export default root;

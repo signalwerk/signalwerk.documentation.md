@@ -10,7 +10,7 @@ export function mediaItems(data) {
             {item.path && (
               <img
                 className={`media-items__image`}
-                src={`./${item.path.replace("/public/", "")}`}
+                src={`/${item.path.replace("/public/", "")}`}
                 alt={item.caption || data.caption || "Media item"}
               />
             )}
