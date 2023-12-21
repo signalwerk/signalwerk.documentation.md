@@ -1,8 +1,19 @@
 import { getFilesFromDir } from "./getFilesFromDir.js";
-import path, { join } from "path";
+import path, { join, dirname, resolve } from "path";
 import fs from "fs";
+import { fileURLToPath } from "url";
 
-export const pagePath = getFilesFromDir("./content", ".json");
+// const __filename = fileURLToPath(import.meta.url);
+
+// const __dirname = dirname(fileURLToPath(import.meta.url));
+
+// Get the file URL of the current module
+// const __filename = fileURLToPath(import.meta.url);
+
+// // Get the directory name of the current module
+// const __dirname = dirname(__filename);
+
+export const pagePath = getFilesFromDir("../../content", ".json");
 export const slugs = [];
 
 export const config = {
@@ -29,9 +40,11 @@ pagePath.forEach((originalPath) => {
     slug = pathComponents.join(path.sep).slice(0, -5); // Construct the slug without file ending
   }
 
-  console.log({slug});
+  console.log({ slug });
   data.file.data.slug = slug;
   config.data[slug] = data;
 
   config.slugs.push(slug);
 });
+
+console.log("finish index");

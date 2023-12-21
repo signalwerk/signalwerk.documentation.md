@@ -6,7 +6,7 @@ import Page from "./page.jsx";
 // import config from './config';
 
 // test
-CMS.registerPreviewStyle("/index.df51a0f8.css");
+CMS.registerPreviewStyle("/index.8353e49f.css");
 console.log("CMS.getPreviewStyles", CMS.getPreviewStyles());
 CMS.registerPreviewTemplate("pages", Page);
 

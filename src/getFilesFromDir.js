@@ -1,12 +1,14 @@
 import fs from "fs";
-import path from "path";
+import path, { resolve } from "path";
 
 // Return a list of files of the specified file-ending in the provided dir
 export function getFilesFromDir(dir, fileEnding) {
   try {
     const filesToReturn = [];
 
+    console.log("stats start");
     const stats = fs.statSync(dir);
+    console.log("stats end");
 
     // it's a dir
     if (stats.isDirectory()) {

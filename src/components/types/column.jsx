@@ -1,5 +1,5 @@
 import { typeProcessor } from "../index.jsx";
-import "./column.css";
+// import "./column.css";
 
 export function column(data) {
   return (

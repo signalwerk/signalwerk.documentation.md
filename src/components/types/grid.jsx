@@ -1,5 +1,5 @@
 import { typeProcessor } from "../index.jsx";
-import "./grid.css";
+// import "./grid.css";
 
 export function grid(data) {
   return (

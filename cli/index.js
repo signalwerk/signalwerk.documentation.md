@@ -1,7 +1,15 @@
 #!/usr/bin/env node
-const { execSync } = require("child_process");
-const fs = require("fs");
-const path = require("path");
+// const { execSync } = require("child_process");
+// const fs = require("fs");
+// const path = require("path");
+import path, { join, dirname, resolve } from "path";
+import fs from "fs";
+import { execSync } from "child_process";
+import { fileURLToPath } from "url";
+
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
 
 // Get the script name from the command line arguments
 const scriptName = process.argv[2];

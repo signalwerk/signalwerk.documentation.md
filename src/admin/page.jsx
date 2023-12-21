@@ -8,13 +8,7 @@ const Page = ({ entry }) => {
   return (
     <div className="page">
       {content?.map((item, index) => {
-        return (
-          <div key={index}>
-            <hr />
-            {typeProcessor(item)}
-            <hr />
-          </div>
-        );
+        return <div key={index}>{typeProcessor(item)}</div>;
       })}
     </div>
   );

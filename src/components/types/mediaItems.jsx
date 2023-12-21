@@ -1,4 +1,4 @@
-import "./mediaItems.css";
+// import "./mediaItems.css";
 
 export function mediaItems(data) {
   return (
@@ -10,14 +10,14 @@ export function mediaItems(data) {
             {item.path && (
               <img
                 className={`media-items__image`}
-                src={item.path}
+                src={`./${item.path.replace("/public/", "")}`}
                 alt={item.caption || data.caption || "Media item"}
               />
             )}
             {item.caption && <p>{item.caption}</p>}
           </div>
         ))}
-        <p>{data.caption}</p>
+        {data.caption && <p>{data.caption}</p>}
       </div>
     </>
   );

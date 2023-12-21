@@ -1,7 +1,15 @@
-const express = require("express");
-const path = require("path");
+// const express = require("express");
+// const path = require("path");
+import express from "express";
+import path, { join, dirname, resolve } from "path";
+import { fileURLToPath } from "url";
 
-module.exports = function (app) {
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
+
+
+const root = (app) => {
   const mainRoot = path.join(__dirname, "../../");
 
   // Logger middleware for debugging
@@ -13,5 +21,8 @@ module.exports = function (app) {
   app.use(express.static(path.join(mainRoot, "admin")));
 
   // Serve the assets directory
-  app.use("/static", express.static(path.join(mainRoot, "static")));
+  app.use("/public", express.static(path.join(mainRoot, "public")));
 };
+
+
+export default root;

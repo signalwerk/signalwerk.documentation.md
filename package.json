@@ -7,16 +7,16 @@
     "sdm": "./cli/index.js"
   },
   "scripts": {
-    "admin": "concurrently 'npm run server:git' 'npm run admin:parcel' 'sleep 2 && npm run update-css'",
+    "admin": "concurrently 'npm run admin:git' 'npm run admin:parcel' 'sleep 2 && npm run admin:update-css'",
+    "admin:git": "npx decap-server",
     "admin:parcel": "parcel ./src/admin/index.html",
-    "update-css": "bash ./scripts/update_css_path.sh",
+    "admin:update-css": "bash ./scripts/update_css_path.sh",
     "build": "npx @fsoc/dhow build",
     "start:watch": "nodemon --ext js,json --watch packages --watch pages --watch content --exec 'npm run start'",
-    "start": "npx @fsoc/dhow dev",
+    "dev": "npx @fsoc/dhow dev",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "server:git": "npx decap-server",
-    "package:current2package": "while read -r file; do cp \"../../$file\" \"./template/$file\"; done < ./template/.copy",
-    "package:package2current": "while read -r file; do cp \"./template/$file\" \"../../$file\"; done < ./template/.copy"
+    "copy:current2package": "while read -r file; do cp \"../../$file\" \"./template/$file\"; done < ./template/.copy",
+    "copy:package2current": "while read -r file; do cp \"./template/$file\" \"../../$file\"; done < ./template/.copy"
   },
   "keywords": [],
   "author": "",
@@ -24,11 +24,12 @@
   "devDependencies": {
     "concurrently": "^8.2.2",
     "express": "^4.18.2",
-    "parcel": "^2.10.3",
-    "process": "^0.11.10",
-    "react": "^17.0.0"
+    "parcel": "^2.8.3",
+    "process": "^0.11.10"
   },
   "dependencies": {
+    "react-helmet": "^6.1.0",
+    "react": "^17.0.0",
     "@fsoc/dhow": "github:fs-c/dhow",
     "buffer": "^6.0.3",
     "decap-cms-app": "^3.0.12",
@@ -51,5 +52,6 @@
     "remark-parse": "^10.0.2",
     "remark-rehype": "^10.1.0",
     "unified": "^10.1.2"
-  }
+  },
+  "type": "module"
 }

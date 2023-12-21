@@ -12,9 +12,28 @@ import { renderNode } from "../../../signalwerk.md/src/render.jsx";
 import { mediaItems } from "./types/mediaItems.jsx";
 import { column } from "./types/column.jsx";
 import { grid } from "./types/grid.jsx";
+import { Helmet } from "react-helmet";
+
 export function typeProcessor(data) {
   // console.log("typeProcessor", { data });
   switch (data?.type) {
+    case "page": {
+      return (
+        <div className="page">
+          <Helmet>
+            <title>{data.title}</title>
+            <meta name="description" content={data.description} />
+            <meta
+              name="viewport"
+              content="width=device-width, initial-scale=1"
+            />
+          </Helmet>
+          {data?.children?.map((item, index) => (
+            <>{typeProcessor(item)}</>
+          ))}
+        </div>
+      );
+    }
     case "text": {
       const { ast } = mdToAstSync(data.body);
       return renderNode(ast);
