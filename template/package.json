@@ -1,0 +1,17 @@
+{
+  "name": "",
+  "version": "1.0.0",
+  "description": "",
+  "scripts": {
+    "start": "npx sdm start",
+    "dev": "npx sdm dev",
+    "build": "npx sdm build"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "signalwerk.documentation.md": "file:packages/signalwerk.documentation.md"
+  },
+  "type": "module"
+}

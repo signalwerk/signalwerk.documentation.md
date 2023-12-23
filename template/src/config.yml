@@ -12,7 +12,7 @@ local_backend: true
 # backend:
 #   name: test-repo
 site_url: "https://tst.org/"
-media_folder: assets/uploads
+media_folder: /public/assets/media
 # media_library:
 #   name: uploadcare
 #   folder_support: true
@@ -59,6 +59,7 @@ types:
         name: children
         widget: list
         required: false
+        collapsed: false
         fields:
           - label: Image
             name: path
@@ -69,11 +70,11 @@ types:
             name: caption
             widget: string
             required: false
-          # - name: type
-          #   label: type
-          #   widget: text
-          #   default: image
-          #   required: false
+          - label: Alternative Text (accessibility)
+            name: alt
+            widget: string
+            required: false
+
       - label: Caption for all media items
         name: caption
         widget: string
@@ -82,6 +83,7 @@ types:
         name: class
         widget: string
         required: false
+
   refPage: &refPage
     label: Page reference
     name: ref_page
@@ -114,6 +116,7 @@ base: &base
   - *media
   - *refPage
 
+
 grid: &grid
   label: Grid
   name: grid
@@ -123,6 +126,7 @@ grid: &grid
       name: children
       widget: list
       required: false
+      collapsed: false
       fields:
         # - label: Width
         #   name: cols
@@ -161,9 +165,36 @@ grid: &grid
           name: children
           # widget: list
           widget: list
+          collapsed: false
           types: *base
           required: false
 
+    - label: Grid Class
+      name: class
+      widget: string
+      required: false
+
+
+# define Anchor for all types
+# can be used with *base (Alias)
+baseBox: &baseBox
+  - *text
+  - *media
+  - *refPage
+  - *grid
+
+
+
+box: &box
+  label: Box
+  name: box
+  widget: object
+  fields:
+    - label: Content
+      name: children
+      widget: list
+      types: *baseBox
+      required: false
     - label: Grid Class
       name: class
       widget: string
@@ -175,6 +206,8 @@ baseExtended: &baseExtended
   - *text
   - *media
   - *refPage
+  - *box
+
 
 collections:
   - name: pages
@@ -249,13 +282,13 @@ collections:
       #   name: body
       #   widget: markdown
       #   hint: Main content goes here.
-      - name: content
+      - name: children
         label: Content
         widget: list
         required: false
+        collapsed: false
         # types: *base
-        types:
-          *baseExtended
+        types: *baseExtended
 
   # =================================================================================================
   # =================================================================================================
