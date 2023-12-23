@@ -19,7 +19,7 @@ npx sdm copy:package2current
 ### Build everything
 
 ```bash
-npm run build
+npx sdm build
 ```
 
 ### Build pages
@@ -39,4 +39,11 @@ npx sdm admin
 ```bash
 # copy current config to package
 npx sdm copy:current2package
+```
+
+## Start Git-Server
+
+```bash
+# copy current config to package
+npx sdm start:git
 ```
