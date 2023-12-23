@@ -1,6 +1,5 @@
 import { mdToAstSync } from "../../../signalwerk.md/src/index.js";
 
-
 export function textMD(node) {
   if (node.type === "text") {
     const { ast } = mdToAstSync(node.body);
@@ -34,8 +33,14 @@ function removePositions(node) {
 }
 
 export function fixPage(node) {
-  node.type = "page";
-
   mediaItems(textMD(node));
-  return node;
+  return {
+    type: ":root",
+    children: [
+      {
+        type: "page",
+        ...node,
+      },
+    ],
+  };
 }

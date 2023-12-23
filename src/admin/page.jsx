@@ -1,13 +1,17 @@
 import { typeProcessor } from "../components/index.jsx";
+import config from "../../../../src/config.jsx";
+import { fixPage } from "../utils/fixPage";
+import { env } from "process";
 
-const Page = ({ entry }) => {
-  const data = entry.getIn(["data"]).toJS();
-  const content = data?.children;
+const Page = ({ entry, CMS }) => {
+  const dataCMS = entry.getIn(["data"]).toJS();
+
+  const data = fixPage(dataCMS);
+  const content = typeProcessor(data, config);
   return (
-    <div className="page">
-      {content?.map((item, index) => {
-        return <div key={index}>{typeProcessor(item)}</div>;
-      })}
+    <div className="preview">
+      {/* process */}
+      {content}
     </div>
   );
 };

@@ -1,6 +1,9 @@
 import React from "react";
 import useFetch from "./utils/useFetch"; // adjust the path as necessary
 import { typeProcessor } from "../../signalwerk.documentation.md/src/components";
+import config from "../../../src/config.jsx";
+
+  console.log("load config", config);
 
 // import React from "react";
 // import ReactDOM from "react-dom";
@@ -15,7 +18,7 @@ const App = () => {
   if (loading) return <div>Loading...</div>;
   if (error) return <div>Error: {error}</div>;
 
-  return <>{typeProcessor(data)}</>;
+  return <>{typeProcessor(data, config)}</>;
 };
 
 // This is a basic example and can be expanded based on your application's needs.
