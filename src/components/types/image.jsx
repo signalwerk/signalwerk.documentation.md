@@ -5,7 +5,7 @@ export function image(node, { alt } = {}) {
     <div className={`node-image ${node.class || ""}`}>
       {
         <img
-          src={`/${node.path.replace("/public/", "")}`}
+          src={node.path}
           alt={node.alt || node.caption || alt || "picture"}
         />
       }

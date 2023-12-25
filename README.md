@@ -12,7 +12,7 @@ mkdir ./public/assets/media/
 git submodule add git@github.com:signalwerk/signalwerk.documentation.md.git ./packages/signalwerk.documentation.md
 git submodule add git@github.com:signalwerk/signalwerk.md.git ./packages/signalwerk.md
 
-
+# package setup
 npm init -y
 npm install --workspace ./packages/signalwerk.documentation.md
 
@@ -21,37 +21,41 @@ rm -rf ./node_modules/
 rm -rf package-lock.json
 yarn
 
+# copy package config to current
 npx sdm copy:package2current
+```
+
+### Add to package.json
+
+```json
+  "scripts": {
+    "dev": "npm run dev --workspace signalwerk.documentation.md",
+    "admin": "npm run admin --workspace signalwerk.documentation.md",
+    "build": "npm run build --workspace signalwerk.documentation.md"
+  },
 ```
 
 ### Build everything
 
 ```bash
-npx sdm build
-```
-
-### Build pages
-
-```bash
-npx sdm build:ssr
+npm run build
 ```
 
 ### Start Admin
 
 ```bash
-npx sdm admin
+npm run admin
 ```
 
-## Admin
+### Start Preview
 
 ```bash
-# copy current config to package
+npm run dev
+```
+
+## copy current config to package
+
+```bash
 npx sdm copy:current2package
 ```
 
-## Start Git-Server
-
-```bash
-# copy current config to package
-npx sdm start:git
-```
