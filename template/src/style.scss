@@ -16,6 +16,13 @@ body {
   margin: 0;
 }
 
+img {
+  width: 100%;
+  display: block;
+  // only required for images with max-width
+  // height: auto;
+}
+
 p {
   margin-top: 0;
   margin-bottom: 0.7em;
@@ -32,3 +39,20 @@ h4 {
   hyphens: none;
   color: black;
 }
+
+// node-grid
+
+// :root {
+//   --node-gird--count: 12;
+//   --node-grid-column--count: 1;
+// }
+
+// .node-grid {
+//   display: var(--grid--display, grid);
+//   grid-template-columns: repeat(var(--node-gird--count), 1fr);
+//   grid-column-gap: var(--grid--grid-column-gap, 1.5rem);
+// }
+
+// .node-grid-column {
+//   grid-column: span var(--node-grid-column--count);
+// }

@@ -1,11 +1,10 @@
 import React from "react";
-import useFetch from "./utils/useFetch"; // adjust the path as necessary
-import { typeProcessor } from "../../signalwerk.documentation.md/src/components";
-import config from "../../../src/config.jsx";
+import useFetch from "../utils/useFetch"; // adjust the path as necessary
+import { typeProcessor } from "../../../signalwerk.documentation.md/src/components";
+import config from "../../../../src/config.jsx";
 
   console.log("load config", config);
 
-// import React from "react";
 // import ReactDOM from "react-dom";
 import { hydrateRoot } from "react-dom/client";
 
@@ -34,3 +33,4 @@ const Main = () => (
 const container = document.getElementById("root");
 
 const root = hydrateRoot(container, <Main />);
+// ReactDOM.render(<Main />, container);

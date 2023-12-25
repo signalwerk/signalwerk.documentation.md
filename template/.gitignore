@@ -1,2 +1,9 @@
 /node_modules
-/docs
+# parcel
+/.parcel-cache
+/dist
+
+# custom
+/.signalwerk-doc
+/.parcel-cache-admin
+/.parcel-cache-main

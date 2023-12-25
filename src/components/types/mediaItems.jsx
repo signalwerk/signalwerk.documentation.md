@@ -1,23 +1,16 @@
-// import "./mediaItems.css";
+import { image } from "./image";
 
-export function mediaItems(data) {
+export function mediaItems(node) {
   return (
     <>
-      {/* <pre>{JSON.stringify(data, null, 2)}</pre> */}
-      <div className={`media-items ${data.class || ""}`}>
-        {data?.children?.map((item, index) => (
+      {/* <pre>{JSON.stringify(node, null, 2)}</pre> */}
+      <div className={`node-media-items ${node.class || ""}`}>
+        {node?.children?.map((item, index) => (
           <div key={index}>
-            {item.path && (
-              <img
-                className={`media-items__image`}
-                src={`/${item.path.replace("/public/", "")}`}
-                alt={item.alt || item.caption || data.caption || "picture"}
-              />
-            )}
-            {item.caption && <p>{item.caption}</p>}
+            {image(item, { alt: node.caption })}
           </div>
         ))}
-        {data.caption && <p>{data.caption}</p>}
+        {node.caption && <p>{node.caption}</p>}
       </div>
     </>
   );

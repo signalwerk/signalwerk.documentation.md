@@ -4,32 +4,35 @@ import { fileURLToPath } from "url";
 
 import { renderToString } from "react-dom/server";
 import { Helmet } from "react-helmet";
-import React from "react";
 import { typeProcessor } from "./components";
 // // import prettier from "prettier";
 import { fixPage } from "./utils/fixPage.js";
 import config from "../../../src/config.jsx";
+import { getFilesFromDir } from "./getFilesFromDir";
 
-const outputHtml = "./docs/index.html";
+const outputHtml = "./index.html";
 
 const __filename = process.argv[1] || fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
 const mainRoot = path.join(__dirname, "../../../../");
+const outputRoot = path.join(mainRoot, "./docs");
+const contentRoot = path.join(mainRoot, "./content");
 
-// console.log({ mainRoot, __filename: resolve(__filename) });
+export const pagePath = getFilesFromDir(contentRoot, ".json");
 
-const dataContent = fs.readFileSync(
-  path.join(mainRoot, "./content/2023-12-17-root.json"),
-  "utf8"
-);
+pagePath.forEach((originalPath) => {
+  const dataContent = fs.readFileSync(originalPath, "utf8");
 
-const data = fixPage(JSON.parse(dataContent));
+  const data = JSON.parse(dataContent);
+  let slug = data.path;
 
-const content = renderToString(typeProcessor(data, config));
-const helmet = Helmet.renderStatic(); // Extract head data
+  const page = fixPage(data);
 
-const htmlString = `
+  const content = renderToString(typeProcessor(page, config));
+  const helmet = Helmet.renderStatic(); // Extract head data
+
+  const htmlString = `
   <!DOCTYPE html>
   <html ${helmet.htmlAttributes.toString()}>
     <head>
@@ -42,8 +45,14 @@ const htmlString = `
     </body>
   </html>`;
 
-// const formattedHtml = await prettier.format(htmlString, { parser: "html" });
-// fs.writeFileSync(outputHtml, formattedHtml);
-fs.writeFileSync(path.join(mainRoot, outputHtml), htmlString);
+  // const formattedHtml = await prettier.format(htmlString, { parser: "html" });
+  // fs.writeFileSync(outputHtml, formattedHtml);
 
-console.log("!!!!!!! finish index");
+  fs.mkdirSync(path.join(outputRoot, slug), { recursive: true }, (err) => {
+    if (err) throw err;
+  });
+
+  fs.writeFileSync(path.join(outputRoot, slug, outputHtml), htmlString);
+
+  console.log("!!!!!!! finish index");
+});

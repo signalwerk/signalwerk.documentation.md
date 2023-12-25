@@ -61,7 +61,11 @@ const root = (app) => {
 
   app.use(
     "/admin/config.yml",
-    express.static(path.join(mainRoot, "admin/config.yml"))
+    express.static(path.join(mainRoot, "src/config.yml"))
+  );
+  app.use(
+    "/config.yml",
+    express.static(path.join(mainRoot, "src/config.yml"))
   );
 
   // Serve the assets directory

@@ -10,13 +10,33 @@ export function textMD(node) {
   return node;
 }
 
+function convertMediaStructure(data) {
+  const children = data.children.map((child) => {
+    // Extract the key (type) and its value
+    const type = Object.keys(child)[0];
+    const content = child[type];
+
+    // Return a new object with type, path, and alt
+    return {
+      type,
+      ...content,
+    };
+  });
+  return {
+    ...data,
+    children,
+  };
+}
+
 export function mediaItems(node) {
   if (node.type === "mediaItems") {
-    node.children.map((mediaItem) => {
-      mediaItem.type = "mediaItem";
-    });
+    const fixedNode = convertMediaStructure(node);
+    return fixedNode;
   } else if (node.children) {
-    node.children.map(mediaItems);
+    return {
+      ...node,
+      children: node.children.map(mediaItems),
+    };
   }
   return node;
 }
@@ -33,13 +53,13 @@ function removePositions(node) {
 }
 
 export function fixPage(node) {
-  mediaItems(textMD(node));
+  const fixedNode = mediaItems(textMD(node));
   return {
     type: ":root",
     children: [
       {
         type: "page",
-        ...node,
+        ...fixedNode,
       },
     ],
   };

@@ -7,10 +7,11 @@
 // import { Grid } from "./components/Grid/index.js";
 // import { Item } from "./components/Item/index.js";
 
-import { mdToAstSync } from "../../../signalwerk.md/src";
-import { renderNode } from "../../../signalwerk.md/src/render.jsx";
 import { mediaItems } from "./types/mediaItems.jsx";
-import { column } from "./types/column.jsx";
+import { image } from "./types/image.jsx";
+import { page } from "./types/page.jsx";
+import { text } from "./types/text.jsx";
+import { gridColumn } from "./types/gridColumn.jsx";
 import { grid } from "./types/grid.jsx";
 import { box } from "./types/box.jsx";
 import { Helmet } from "react-helmet";
@@ -59,8 +60,10 @@ export function typeProcessor(data, config) {
       );
     }
     case "page": {
+      return page(data);
+
       return (
-        <div className="page">
+        <div className="node-page">
           <Helmet>
             <title>{data.title}</title>
             <meta name="description" content={data.description} />
@@ -72,8 +75,7 @@ export function typeProcessor(data, config) {
       );
     }
     case "text": {
-      const { ast } = mdToAstSync(data.body);
-      return renderNode(ast);
+      return text(data);
     }
     case "grid": {
       return <>{grid(data)}</>;
@@ -82,10 +84,13 @@ export function typeProcessor(data, config) {
       return <>{box(data)}</>;
     }
     case "grid-column": {
-      return column(data);
+      return gridColumn(data);
     }
     case "mediaItems": {
       return mediaItems(data);
+    }
+    case "image": {
+      return image(data);
     }
 
     // case "image": {
