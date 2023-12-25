@@ -33,17 +33,14 @@ const root = (app) => {
   });
 
   app.use("/api", (req, res, next) => {
-    console.log("!!!!!!! finish index", pathCache);
-    // console.log({ req, res, next });
-
     const slug = req.originalUrl
       .replace("/api", "")
       .replace("index.json", "")
       .replace(/\/+/g, "/");
 
-    console.log("Requested URL:", req.originalUrl);
-    console.log("Requested slug:", slug);
-    console.log("Requested pathCache:", pathCache[slug]);
+    // console.log("Requested URL:", req.originalUrl);
+    // console.log("Requested slug:", slug);
+    // console.log("Requested pathCache:", pathCache[slug]);
 
     const content = fs.readFileSync(`${pathCache[slug]}`, "utf-8");
     const data = JSON.parse(content);
@@ -52,21 +49,14 @@ const root = (app) => {
 
     const fixedData = fixPage(data);
 
-    // res.json(data);
-    // res.send(data);
     res.end(JSON.stringify(fixedData, null, 3));
-
-    // next();
   });
 
   app.use(
     "/admin/config.yml",
     express.static(path.join(mainRoot, "src/config.yml"))
   );
-  app.use(
-    "/config.yml",
-    express.static(path.join(mainRoot, "src/config.yml"))
-  );
+  app.use("/config.yml", express.static(path.join(mainRoot, "src/config.yml")));
 
   // Serve the assets directory
   app.use("/assets", express.static(path.join(mainRoot, "public/assets")));
