@@ -40,6 +40,7 @@ pagePath.forEach((originalPath) => {
       ${helmet.title.toString()}
       ${helmet.meta.toString()}
       ${helmet.link.toString()}
+      <link rel="stylesheet" href="/style.css" />
     </head>
     <body ${helmet.bodyAttributes.toString()}>
       <div id="app">${content}</div>
