@@ -1,35 +1,32 @@
 import CMS from "decap-cms-app";
 import config from "../../../../src/config.jsx";
+import settings from "../../../../src/settings.json";
 
-// import CMS from "@staticcms/core";
-// import "@staticcms/core/dist/main.css";
 import Page from "./page.jsx";
-// import config from './config';
 
-// wait for DOM ready
-// document.addEventListener("DOMContentLoaded", () => {
-// get the form elements defined in your form HTML above
-var linkTag = document.querySelector('link[rel="stylesheet"]');
+// get the css elements defined in header HTML
+const linkTag = document.querySelector('link[rel="stylesheet"]');
+
 if (linkTag) {
-  console.log(linkTag.href); // This will log the href attribute value to the console
-
+  // css from /src/style.scss
   CMS.registerPreviewStyle(linkTag.href);
-  CMS.registerPreviewStyle(
-    "https://fonts.signalwerk.ch/css/latest/family=Work+Sans:ital,wght@0,100..900;1,100..900.css"
-  );
 
-  // if (config?.admin?.init) {
-  //   console.log("init CMS");
-  //   config.admin.init({ CMS });
-  // }
+  // css from settings
+  if (settings?.page?.head?.stylesheets) {
+    settings.page.head.stylesheets.forEach((stylesheet) => {
+      CMS.registerPreviewStyle(stylesheet.path);
+    });
+  }
 
-  // linkTag.href = "";
+  // config itnit
+  if (config?.admin?.init) {
+    config.admin.init({ CMS });
+  }
 } else {
-  console.log("Link tag with rel='preview-stylesheet' not found");
+  console.log("Link tag with rel='stylesheet' not found");
 }
 
-// test
-// console.log("CMS.getPreviewStyles", CMS.getPreviewStyles());
+// register pages
 CMS.registerPreviewTemplate("pages", ({ entry }) => Page({ entry, CMS }));
 
 // https://decapcms.org/docs/beta-features/#custom-formatters
@@ -39,4 +36,3 @@ CMS.registerPreviewTemplate("pages", ({ entry }) => Page({ entry, CMS }));
 // });
 
 CMS.init();
-// });

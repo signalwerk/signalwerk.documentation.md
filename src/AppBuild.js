@@ -8,6 +8,7 @@ import { typeProcessor } from "./components";
 import prettier from "prettier";
 import { fixPage } from "./utils/fixPage.js";
 import config from "../../../src/config.jsx";
+import settings from "../../../src/settings.json";
 import { getFilesFromDir } from "./getFilesFromDir";
 
 const outputHtml = "./index.html";
@@ -29,7 +30,7 @@ pagePath.forEach((originalPath) => {
 
   const page = fixPage(data);
 
-  const content = renderToString(typeProcessor(page, config));
+  const content = renderToString(typeProcessor(page, { config, settings }));
   const helmet = Helmet.renderStatic(); // Extract head data
 
   const htmlString = `

@@ -16,72 +16,61 @@ import { grid } from "./types/grid.jsx";
 import { box } from "./types/box.jsx";
 import { Helmet } from "react-helmet";
 
-export function typeProcessor(data, config) {
-  // console.log("typeProcessor", { data });
+export function typeProcessor(data, configuration) {
+  if (!data) return null;
 
-  if (config?.types?.[data?.type]) {
-    // console.log(`typeProcessor overwrite for ${data.type}`);
+  // if data is an array, process each item
+  if (Array.isArray(data)) {
+    return data.map((item) => typeProcessor(item, configuration));
+  }
+
+  const { config, settings } = configuration;
+
+  if (config?.types?.[data.type]) {
     const currentProcessor = config.types?.[data.type];
     const content = currentProcessor(data, {
       Helmet,
       processor: {
-        run: (item) => typeProcessor(item, config),
+        run: (item) => typeProcessor(item, configuration),
       },
     });
 
-    // if (config.env === "admin" && data?.type === ":root") {
-    //   console.log("----- callback :root");
-    //   console.log("----- callback context", config.context);
-    //   console.log("----- callback", config?.callback?.[data?.type]);
-    // }
-    if (config.env === "admin" && config?.admin?.callback?.[data?.type]) {
-      // console.log("----- callback");
-
-      config?.admin?.callback?.[data?.type]({ CMS: config.context?.CMS });
+    if (config.env === "admin" && config?.admin?.callback?.[data.type]) {
+      config?.admin?.callback?.[data.type]({ CMS: config.context?.CMS });
     }
 
     return content;
   }
 
-  switch (data?.type) {
+  switch (data.type) {
     case ":root": {
       return (
         <>
           <Helmet>
+            {settings?.page?.head?.stylesheets.map((stylesheet) => (
+              <link href={stylesheet.path} rel="stylesheet" />
+            ))}
             <meta
               name="viewport"
               content="width=device-width, initial-scale=1"
             />
           </Helmet>
-          {data?.children?.map((item, index) => (
-            <>{typeProcessor(item)}</>
-          ))}
+
+          <>{data.children && typeProcessor(data.children, configuration)}</>
         </>
       );
     }
     case "page": {
-      return page(data);
-
-      return (
-        <div className="node-page">
-          <Helmet>
-            <title>{data.title}</title>
-            <meta name="description" content={data.description} />
-          </Helmet>
-          {data?.children?.map((item, index) => (
-            <>{typeProcessor(item)}</>
-          ))}
-        </div>
-      );
+      return page(data, configuration);
     }
     case "text": {
       return text(data);
     }
     case "grid": {
-      return <>{grid(data)}</>;
+      return <>{grid(data, configuration)}</>;
     }
     case "box": {
-      return <>{box(data)}</>;
+      return <>{box(data, configuration)}</>;
     }
     case "grid-column": {
       return gridColumn(data);
@@ -93,14 +82,11 @@ export function typeProcessor(data, config) {
       return image(data);
     }
 
-    // case "image": {
-    // }
-
     default:
-      console.warn("Unsupported data type: ", data?.type);
+      console.warn("Unsupported data type: ", data.type);
       return (
         <>
-          <p>!!! ERROR Unsupported data type: {data?.type}</p>
+          <p>!!! ERROR Unsupported data type: {data.type}</p>
           <pre>{JSON.stringify(data, null, 2)}</pre>
         </>
       );

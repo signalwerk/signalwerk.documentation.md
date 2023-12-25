@@ -1,7 +1,7 @@
 import { Helmet } from "react-helmet";
 import { typeProcessor } from "../index.jsx";
 
-export function page(node) {
+export function page(node, configuration) {
   if (!node) return null;
   return (
     <>
@@ -11,9 +11,7 @@ export function page(node) {
         <meta name="description" content={node.description} />
       </Helmet>
       <div className={`node-page ${node.class || ""}`}>
-        {node?.children?.map((item, index) => (
-          <>{typeProcessor(item)}</>
-        ))}
+        <>{node.children && typeProcessor(node.children, configuration)}</>
       </div>
     </>
   );

@@ -1,12 +1,9 @@
 import React from "react";
+import { hydrateRoot } from "react-dom/client";
 import useFetch from "../utils/useFetch"; // adjust the path as necessary
 import { typeProcessor } from "../../../signalwerk.documentation.md/src/components";
 import config from "../../../../src/config.jsx";
-
-  console.log("load config", config);
-
-// import ReactDOM from "react-dom";
-import { hydrateRoot } from "react-dom/client";
+import settings from "../../../../src/settings.json";
 
 const App = () => {
   const path = window.location.pathname;
@@ -17,7 +14,7 @@ const App = () => {
   if (loading) return <div>Loading...</div>;
   if (error) return <div>Error: {error}</div>;
 
-  return <>{typeProcessor(data, config)}</>;
+  return <>{typeProcessor(data, { config, settings })}</>;
 };
 
 // This is a basic example and can be expanded based on your application's needs.

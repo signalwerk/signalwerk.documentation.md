@@ -1,12 +1,10 @@
 import { typeProcessor } from "../index.jsx";
 
-export function box(data) {
+export function box(node, configuration) {
   return (
     <>
-      <div className={`box ${data.class || ""}`}>
-        {data?.children?.map((item, index) => (
-          <>{typeProcessor(item)}</>
-        ))}
+      <div className={`box ${node.class || ""}`}>
+        <>{node.children && typeProcessor(node.children, configuration)}</>
       </div>
     </>
   );
