@@ -1,5 +1,6 @@
 .gitignore
 package.json
-src/config.yml
 src/config.jsx
+src/config.yml
+src/settings.json
 src/style.scss

@@ -4,10 +4,8 @@
   line-height: 1.6;
   hyphens: auto;
   font-size: 16px;
-}
 
-@media (min-width: 768px) {
-  :root {
+  @media (min-width: 768px) {
     font-size: 20px;
   }
 }

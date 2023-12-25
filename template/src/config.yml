@@ -1,17 +1,14 @@
 backend:
-  name: git-gateway
-
-# when using the default proxy server port
-local_backend: true
-# local_backend:
-#   # when using a custom proxy server port
-#   url: http://localhost:8082/api/v1
-#   # when accessing the local site from a host other than 'localhost' or '127.0.0.1'
-#   allowed_hosts: ['192.168.0.1']
+  name: github
+  repo: signalwerk/XXXXXX
+  base_url: https://auth.signalwerk.workers.dev
+  branch: main
 
 # backend:
-#   name: test-repo
-site_url: "https://tst.org/"
+#   name: git-gateway
+# local_backend: true
+
+site_url: "https://XXXXXX.com/"
 media_folder: /public/assets/media
 # media_library:
 #   name: uploadcare
@@ -48,8 +45,30 @@ types:
         name: class
         widget: string
         required: false
+  image: &image
+    label: Image
+    name: image
+    widget: object
+    fields:
+      - label: Image
+        name: path
+        widget: image
+        required: false
+        # multiple: true
+      - label: Caption per Image
+        name: caption
+        widget: string
+        required: false
+      - label: Alternative Text (accessibility)
+        name: alt
+        widget: string
+        required: false
+      - label: Class
+        name: class
+        widget: string
+        required: false
 
-  media: &media
+  mediaItems: &mediaItems
     label: Media Items
     label_singular: Media Item
     name: mediaItems
@@ -61,20 +80,7 @@ types:
         required: false
         collapsed: false
         fields:
-          - label: Image
-            name: path
-            widget: image
-            required: false
-            # multiple: true
-          - label: Caption per Image
-            name: caption
-            widget: string
-            required: false
-          - label: Alternative Text (accessibility)
-            name: alt
-            widget: string
-            required: false
-
+          - *image
       - label: Caption for all media items
         name: caption
         widget: string
@@ -84,38 +90,30 @@ types:
         widget: string
         required: false
 
-  refPage: &refPage
-    label: Page reference
-    name: ref_page
-    widget: object
-    fields:
-      - name: selectionType
-        label: Type
-        widget: select
-        options:
-          - value: all
-            label: All
-          - value: selection
-            label: Selection
-      - label: "Selection"
-        name: "pages"
-        widget: "relation"
-        multiple: true
-        collection: "pages"
-        search_fields: ["title", "path"]
-        display_fields: ["title", "· {{path}}"]
-        value_field: "path"
-        condition:
-          field: selectionType
-          value: selection
-
-# define Anchor for all types
-# can be used with *base (Alias)
-base: &base
-  - *text
-  - *media
-  - *refPage
-
+  # refPage: &refPage
+  #   label: Page reference
+  #   name: ref_page
+  #   widget: object
+  #   fields:
+  #     - name: selectionType
+  #       label: Type
+  #       widget: select
+  #       options:
+  #         - value: all
+  #           label: All
+  #         - value: selection
+  #           label: Selection
+  #     - label: "Selection"
+  #       name: "pages"
+  #       widget: "relation"
+  #       multiple: true
+  #       collection: "pages"
+  #       search_fields: ["title", "path"]
+  #       display_fields: ["title", "· {{path}}"]
+  #       value_field: "path"
+  #       condition:
+  #         field: selectionType
+  #         value: selection
 
 grid: &grid
   label: Grid
@@ -166,24 +164,16 @@ grid: &grid
           # widget: list
           widget: list
           collapsed: false
-          types: *base
+          types:
+            - *text
+            - *image
+            - *mediaItems
           required: false
 
     - label: Grid Class
       name: class
       widget: string
       required: false
-
-
-# define Anchor for all types
-# can be used with *base (Alias)
-baseBox: &baseBox
-  - *text
-  - *media
-  - *refPage
-  - *grid
-
-
 
 box: &box
   label: Box
@@ -193,21 +183,21 @@ box: &box
     - label: Content
       name: children
       widget: list
-      types: *baseBox
+      types:
+        - *text
+        - *image
       required: false
     - label: Grid Class
       name: class
       widget: string
       required: false
 
-baseExtended: &baseExtended
-  - *grid
-  # ---- base from here
+# types for on the children of the page
+basePage: &basePage
   - *text
-  - *media
-  - *refPage
-  - *box
-
+  - *image
+  # - *mediaItems
+  # - *grid
 
 collections:
   - name: pages
@@ -278,17 +268,13 @@ collections:
         name: description
         widget: string
         required: false
-      # - label: Body
-      #   name: body
-      #   widget: markdown
-      #   hint: Main content goes here.
       - name: children
         label: Content
         widget: list
         required: false
         collapsed: false
         # types: *base
-        types: *baseExtended
+        types: *basePage
 
   # =================================================================================================
   # =================================================================================================
@@ -299,59 +285,26 @@ collections:
     editor:
       preview: false
     files:
-      - name: general
-        label: Site Settings
-        file: _data/settings.json
-        description: General Site Settings
+      - name: settings
+        label: Settings
+        file: src/settings.json
         fields:
-          - label: Number of posts on frontpage
-            name: front_limit
-            widget: number
-            min: 1
-            max: 10
-          - label: Global title
-            name: site_title
-            widget: string
-          - label: Post Settings
-            name: posts
+          - label: Page
+            name: page
             widget: object
+            required: false
             fields:
-              - label: Number of posts on frontpage
-                name: front_limit
-                widget: number
-                min: 1
-                max: 10
-              - label: Default Author
-                name: author
-                widget: string
-              - label: Default Thumbnail
-                name: thumb
-                widget: image
+              - label: Head
+                name: head
+                widget: object
                 required: false
-      - name: authors
-        label: Authors
-        file: _data/authors.yml
-        description: Author descriptions
-        editor:
-          preview: true
-        fields:
-          - name: authors
-            label: Authors
-            label_singular: Author
-            widget: list
-            fields:
-              - label: Name
-                name: name
-                widget: string
-                hint: First and Last
-              - label: Description
-                name: description
-                widget: text
-  # =================================================================================================
-  # =================================================================================================
-  # =================================================================================================
-  # =================================================================================================
-  # =================================================================================================
-  # =================================================================================================
-  # =================================================================================================
-  # =================================================================================================
+                fields:
+                  - label: stylesheets
+                    name: stylesheets
+                    widget: list
+                    required: false
+                    collapsed: false
+                    fields:
+                      - label: Path
+                        name: path
+                        widget: string
