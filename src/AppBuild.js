@@ -10,8 +10,10 @@ import { fixPage } from "./utils/fixPage.js";
 import config from "../../../src/config.jsx";
 import settings from "../../../src/settings.json";
 import { getFilesFromDir } from "./getFilesFromDir";
+import crypto from "crypto";
 
 const outputHtml = "./index.html";
+const stylesheetPath = "/style.css";
 
 const __filename = process.argv[1] || fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -21,6 +23,12 @@ const outputRoot = path.join(mainRoot, "./docs");
 const contentRoot = path.join(mainRoot, "./content");
 
 export const pagePath = getFilesFromDir(contentRoot, ".json");
+
+const stylesheet = fs.readFileSync(
+  path.join(outputRoot, stylesheetPath),
+  "utf8"
+);
+const hash = crypto.createHash("md5").update(stylesheet).digest("hex"); // create hash from stylesheet
 
 pagePath.forEach((originalPath) => {
   const dataContent = fs.readFileSync(originalPath, "utf8");
@@ -40,7 +48,10 @@ pagePath.forEach((originalPath) => {
       ${helmet.title.toString()}
       ${helmet.meta.toString()}
       ${helmet.link.toString()}
-      <link rel="stylesheet" href="/style.css" />
+      <link rel="stylesheet" href="${stylesheetPath}?bust=${hash.slice(
+        0,
+        6
+      )}" />
     </head>
     <body ${helmet.bodyAttributes.toString()}>
       <div id="app">${content}</div>
