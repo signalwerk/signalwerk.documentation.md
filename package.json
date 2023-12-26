@@ -35,7 +35,7 @@
     "site": {
       "source": "src/site/site.html",
       "distDir": "../../docs/",
-      "publicUrl": "../"
+      "publicUrl": "/"
     },
     "admin": {
       "source": "src/admin/index.html",
