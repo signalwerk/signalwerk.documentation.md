@@ -44,9 +44,10 @@ export function typeProcessor(data, configuration) {
 
   switch (data.type) {
     case ":root": {
+      const lang = settings?.page?.html?.lang || "en";
       return (
         <>
-          <Helmet>
+          <Helmet htmlAttributes={{ lang }}>
             {settings?.page?.head?.stylesheets.map((stylesheet) => (
               <link href={stylesheet.path} rel="stylesheet" />
             ))}

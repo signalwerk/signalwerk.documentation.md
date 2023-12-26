@@ -187,6 +187,11 @@ box: &box
         - *text
         - *image
       required: false
+    - label: Type
+      name: preset
+      widget: select
+      options: ["default", "footer"]
+      default: "default"
     - label: Grid Class
       name: class
       widget: string
@@ -196,6 +201,7 @@ box: &box
 basePage: &basePage
   - *text
   - *image
+  # - *box
   # - *mediaItems
   # - *grid
 
@@ -294,6 +300,14 @@ collections:
             widget: object
             required: false
             fields:
+              - label: HTML
+                name: html
+                widget: object
+                required: false
+                fields:
+                  - label: Default language
+                    name: lang
+                    widget: string
               - label: Head
                 name: head
                 widget: object
