@@ -192,7 +192,7 @@ box: &box
       widget: select
       options: ["default", "footer"]
       default: "default"
-    - label: Grid Class
+    - label: Class
       name: class
       widget: string
       required: false
