@@ -38,7 +38,10 @@ pagePath.forEach((originalPath) => {
 
   const page = fixPage(data);
 
-  const content = renderToString(typeProcessor(page, { config, settings }));
+  const content = renderToString(typeProcessor(page, { config, settings }))
+    // Remove `html injected
+    .replaceAll(`<span class="--node-remove-html-start">`, "")
+    .replaceAll(`<span class="--node-remove-html-end"></span></span>`, "");
   const helmet = Helmet.renderStatic(); // Extract head data
 
   const htmlString = `
@@ -48,10 +51,10 @@ pagePath.forEach((originalPath) => {
       ${helmet.title.toString()}
       ${helmet.meta.toString()}
       ${helmet.link.toString()}
-      <link rel="stylesheet" href="${stylesheetPath}?bust=${hash.slice(
-        0,
-        6
-      )}" />
+      <link rel="stylesheet" href="${stylesheetPath}?bust=${
+        // bust cache
+        hash.slice(0, 6)
+      }" />
     </head>
     <body ${helmet.bodyAttributes.toString()}>
       <div id="app">${content}</div>
@@ -61,6 +64,8 @@ pagePath.forEach((originalPath) => {
   fs.mkdirSync(path.join(outputRoot, slug), { recursive: true }, (err) => {
     if (err) throw err;
   });
+
+  // fs.writeFileSync(path.join(outputRoot, slug, outputHtml), htmlString);
 
   const formattedHtml = prettier
     .format(htmlString, { parser: "html" })
