@@ -29,6 +29,46 @@ if (linkTag) {
 // register pages
 CMS.registerPreviewTemplate("pages", ({ entry }) => Page({ entry, CMS }));
 
+const CmsString = CMS.getWidget("string").control;
+
+CMS.registerWidget("pathpreview", (props) => {
+  const images = props.field.get("images", []);
+
+  console.log("images", JSON.stringify(images[0], null, 2));
+  return (
+    <>
+      <CmsString {...props} />
+
+      <div
+        style={{
+          display: "flex",
+          flexWrap: "nowrap",
+          gap: "0.5em",
+          paddingTop: "0.3em",
+          lineHeight: 1,
+          alignItems: "center",
+        }}
+      >
+        {images.map((image) => {
+          const url = image.get("url");
+          const img = image.get("img");
+          const name = image.get("name");
+          return (
+            <>
+              <a href={url} target="_blank">
+                <img src={img} alt={name || "image"} />
+              </a>
+            </>
+          );
+        })}
+        <a href={props.value} target="_blank">
+          show current page ↗
+        </a>
+      </div>
+    </>
+  );
+});
+
 // https://decapcms.org/docs/beta-features/#custom-formatters
 // CMS.registerCustomFormat("json5", "json5", {
 //   fromFile: (text) => JSON.parse(text),
