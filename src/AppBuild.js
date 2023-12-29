@@ -40,8 +40,7 @@ pagePath.forEach((originalPath) => {
 
   const content = renderToString(typeProcessor(page, { config, settings }))
     // Remove `html injected
-    .replaceAll(`<span class="--node-remove-html-start">`, "")
-    .replaceAll(`<span class="--node-remove-html-end"></span></span>`, "");
+
   const helmet = Helmet.renderStatic(); // Extract head data
 
   const htmlString = `

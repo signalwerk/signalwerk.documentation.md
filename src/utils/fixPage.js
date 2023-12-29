@@ -41,6 +41,8 @@ export function mediaItems(node) {
   return node;
 }
 function removePositions(node) {
+  if (!node) return node;
+
   if (node.position) {
     delete node.position; // Remove the position property
   }
