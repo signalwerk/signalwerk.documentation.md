@@ -14,13 +14,18 @@ const __dirname = dirname(__filename);
 const mainRoot = path.join(__dirname, "../../");
 const contentRoot = path.join(mainRoot, "./content");
 
+const settingsPath = path.join(mainRoot, "src/settings.json");
+const settings = JSON.parse(fs.readFileSync(settingsPath, "utf-8"));
+
 export const pagePath = getFilesFromDir(contentRoot, ".json");
 
-const pathCache = {};
+const pathCache = {}; // map from slug to original path
+const pageData = {}; // data with id = path
 
 pagePath.forEach((originalPath) => {
   const content = fs.readFileSync(originalPath, "utf-8");
   const data = JSON.parse(content);
+  pageData[originalPath] = data;
   let slug = data.path;
   pathCache[slug] = originalPath;
 });
@@ -42,12 +47,12 @@ const root = (app) => {
     // console.log("Requested slug:", slug);
     // console.log("Requested pathCache:", pathCache[slug]);
 
-    const content = fs.readFileSync(`${pathCache[slug]}`, "utf-8");
-    const data = JSON.parse(content);
-
+    // const content = fs.readFileSync(`${pathCache[slug]}`, "utf-8");
+    // const data = JSON.parse(content);
+    const data = pageData[pathCache[slug]];
     data.type = "page";
 
-    const fixedData = fixPage(data);
+    const fixedData = fixPage(data, { settings, data: pageData, pathCache });
 
     res.end(JSON.stringify(fixedData, null, 3));
   });

@@ -1,3 +1,4 @@
+import { title } from "process";
 import { mdToAstSync } from "../../../signalwerk.md/src/index.js";
 
 export function textMD(node) {
@@ -54,13 +55,31 @@ function removePositions(node) {
   return node;
 }
 
-export function fixPage(node) {
+export function fixPage(node, { settings, data, pathCache }) {
   const fixedNode = mediaItems(textMD(node));
+
+  const rawMenu = settings?.menus?.find((item) => item?.menu?.title === "main");
+
+  const menu = rawMenu?.menu?.ref_page?.pages?.map((path) => {
+    const filename = pathCache[path];
+    const page = data[filename];
+    return {
+      label: page.title,
+      path: page.path,
+    };
+  });
+
   return {
     type: ":root",
     children: [
       {
         type: "page",
+        menus: {
+          main: {
+            title: rawMenu?.menu?.title,
+            items: menu,
+          },
+        },
         ...fixedNode,
       },
     ],
