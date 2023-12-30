@@ -90,30 +90,32 @@ types:
         widget: string
         required: false
 
-  # refPage: &refPage
-  #   label: Page reference
-  #   name: ref_page
-  #   widget: object
-  #   fields:
-  #     - name: selectionType
-  #       label: Type
-  #       widget: select
-  #       options:
-  #         - value: all
-  #           label: All
-  #         - value: selection
-  #           label: Selection
-  #     - label: "Selection"
-  #       name: "pages"
-  #       widget: "relation"
-  #       multiple: true
-  #       collection: "pages"
-  #       search_fields: ["title", "path"]
-  #       display_fields: ["title", "· {{path}}"]
-  #       value_field: "path"
-  #       condition:
-  #         field: selectionType
-  #         value: selection
+  refPage: &refPage
+    label: Page reference
+    name: ref_page
+    widget: object
+    fields:
+      - name: selectionType
+        label: Type
+        widget: select
+        required: false
+        default: "selection"
+        options:
+          - value: all
+            label: All
+          - value: selection
+            label: Selection
+      - label: "Selection"
+        name: "pages"
+        widget: "relation"
+        multiple: true
+        collection: "pages"
+        search_fields: ["title", "path"]
+        display_fields: ["title", "· {{path}}"]
+        value_field: "path"
+        condition:
+          field: selectionType
+          value: selection
 
 grid: &grid
   label: Grid
@@ -187,10 +189,11 @@ box: &box
         - *text
         - *image
       required: false
+      collapsed: false
     - label: Type
       name: preset
       widget: select
-      options: ["default", "footer"]
+      options: ["default", "header", "footer"]
       default: "default"
     - label: Class
       name: class
@@ -254,18 +257,26 @@ collections:
         widget: string
       - label: Path
         name: path
-        widget: string
+        widget: pathpreview
+        images:
+          - url: https://github.com/signalwerk/XXXXXX/actions/workflows/gh-pages.yml
+            img: https://github.com/signalwerk/XXXXXX/actions/workflows/gh-pages.yml/badge.svg
+          - url: https://github.com/signalwerk/XXXXXX/actions/workflows/pages/pages-build-deployment
+            img: https://github.com/signalwerk/XXXXXX/actions/workflows/pages/pages-build-deployment/badge.svg
+
         # required: false
       - label: Draft
         name: draft
         widget: boolean
         default: false
-      - label: Publish Date
+      - label: Date
         name: date
         widget: datetime
-        date_format: yyyy-MM-dd
-        time_format: "HH:mm"
-        format: "yyyy-MM-dd'T'HH:mm:ss.SSSXXX"
+        date_format: "DD.MM.YYYY" # e.g. 24.12.2021
+        time_format: "HH:mm" # e.g. 21:07
+        format: "x"
+
+        # format: "yyyy-MM-dd'T'HH:mm:ss.SSSXXX"
       - label: Cover Image
         name: image
         widget: image
@@ -295,6 +306,21 @@ collections:
         label: Settings
         file: src/settings.json
         fields:
+          - label: Menus
+            name: menus
+            widget: list
+            required: false
+            collapsed: false
+            fields:
+              - label: Menu
+                name: menu
+                widget: object
+                required: false
+                fields:
+                  - label: Title
+                    name: title
+                    widget: string
+                  - *refPage
           - label: Page
             name: page
             widget: object
