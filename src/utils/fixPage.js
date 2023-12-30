@@ -55,7 +55,7 @@ function removePositions(node) {
   return node;
 }
 
-export function fixPage(node, { settings, data, pathCache }) {
+export function fixPage(node, { settings, data, pathCache } = {}) {
   const fixedNode = mediaItems(textMD(node));
 
   const rawMenu = settings?.menus?.find((item) => item?.menu?.title === "main");
