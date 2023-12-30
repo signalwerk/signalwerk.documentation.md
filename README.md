@@ -11,7 +11,7 @@ git submodule add git@github.com:signalwerk/signalwerk.md.git ./packages/signalw
 
 # create directory structure
 mkdir -p ./src/
-mkdir -p ./content/
+mkdir -p ./content/pages/
 mkdir -p ./public/assets/media/
 
 # copy package config to current

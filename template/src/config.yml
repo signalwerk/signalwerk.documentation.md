@@ -215,7 +215,7 @@ collections:
     label_singular: Page
     description: >
       Page
-    folder: content
+    folder: content/pages
     slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
     summary_fields:
       - title
@@ -275,8 +275,6 @@ collections:
         date_format: "DD.MM.YYYY" # e.g. 24.12.2021
         time_format: "HH:mm" # e.g. 21:07
         format: "x"
-
-        # format: "yyyy-MM-dd'T'HH:mm:ss.SSSXXX"
       - label: Cover Image
         name: image
         widget: image

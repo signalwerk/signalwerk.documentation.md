@@ -20,7 +20,7 @@ const __dirname = dirname(__filename);
 
 const mainRoot = path.join(__dirname, "../../../../");
 const outputRoot = path.join(mainRoot, "./docs");
-const contentRoot = path.join(mainRoot, "./content");
+const contentRoot = path.join(mainRoot, "./content/pages");
 
 export const pagePath = getFilesFromDir(contentRoot, ".json");
 

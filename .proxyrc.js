@@ -4,20 +4,10 @@ import express from "express";
 import path, { join, dirname, resolve } from "path";
 import fs from "fs";
 
-import { fileURLToPath } from "url";
-import { getFilesFromDir } from "./src/getFilesFromDir.js";
 import { fixPage } from "./src/utils/fixPage.js";
+import { pagePath, mainRoot, settings } from "./settings.js";
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = dirname(__filename);
 
-const mainRoot = path.join(__dirname, "../../");
-const contentRoot = path.join(mainRoot, "./content");
-
-const settingsPath = path.join(mainRoot, "src/settings.json");
-const settings = JSON.parse(fs.readFileSync(settingsPath, "utf-8"));
-
-export const pagePath = getFilesFromDir(contentRoot, ".json");
 
 const pathCache = {}; // map from slug to original path
 const pageData = {}; // data with id = path
