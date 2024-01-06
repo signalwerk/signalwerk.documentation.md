@@ -7,8 +7,6 @@ import fs from "fs";
 import { fixPage } from "./src/utils/fixPage.js";
 import { pagePath, mainRoot, settings } from "./settings.js";
 
-
-
 const pathCache = {}; // map from slug to original path
 const pageData = {}; // data with id = path
 
@@ -37,9 +35,11 @@ const root = (app) => {
     // console.log("Requested slug:", slug);
     // console.log("Requested pathCache:", pathCache[slug]);
 
-    // const content = fs.readFileSync(`${pathCache[slug]}`, "utf-8");
-    // const data = JSON.parse(content);
-    const data = pageData[pathCache[slug]];
+    // update cache
+    const content = fs.readFileSync(`${pathCache[slug]}`, "utf-8");
+    const data = JSON.parse(content);
+
+    pageData[pathCache[slug]] = data;
     data.type = "page";
 
     const fixedData = fixPage(data, { settings, data: pageData, pathCache });

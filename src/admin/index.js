@@ -1,8 +1,10 @@
+import React from "react";
 import CMS from "decap-cms-app";
 import config from "../../../../src/config.jsx";
 import settings from "../../../../src/settings.json";
 
 import Page from "./page.jsx";
+import SignalwerkEditor from "./editor.jsx";
 
 // get the css elements defined in header HTML
 const linkTag = document.querySelector('link[rel="stylesheet"]');
@@ -30,6 +32,17 @@ if (linkTag) {
 CMS.registerPreviewTemplate("pages", ({ entry }) => Page({ entry, CMS }));
 
 const CmsString = CMS.getWidget("string").control;
+
+CMS.registerWidget("SignalwerkEditor", ({ field, value, onChange }) => {
+  return (
+    <>
+      {/* --{value}-- */}
+      <div style={{ height: "550px", border: "2px solid rgb(223, 223, 227)" }}>
+        <SignalwerkEditor value={value} onChange={onChange} />
+      </div>
+    </>
+  );
+});
 
 CMS.registerWidget("pathpreview", (props) => {
   const images = props.field.get("images", []);
