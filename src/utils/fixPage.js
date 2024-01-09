@@ -1,5 +1,6 @@
 import { title } from "process";
 import { mdToAstSync } from "../../../signalwerk.md/src/index.js";
+import processor from "../../../../src/processor.js";
 
 export function textMD(node) {
   if (node.type === "text") {
@@ -7,6 +8,21 @@ export function textMD(node) {
     node.children = [removePositions(ast)];
   } else if (node.children) {
     node.children.map(textMD);
+  }
+  return node;
+}
+export function textMDfootnote(node, settings) {
+  // console.log("!!!!!footnoteReference", node);
+  if (node.type === "footnoteReference") {
+    settings.usage.push(node.identifier);
+    node.index = settings.index++;
+  }
+  if (node.type === "footnoteDefinition") {
+    if (node.children.length > 0) {
+      settings.definitions[node.identifier] = node;
+    }
+  } else if (node.children) {
+    node.children.map((item) => textMDfootnote(item, settings));
   }
   return node;
 }
@@ -54,9 +70,41 @@ function removePositions(node) {
 
   return node;
 }
+function processDataSettings(node, processor) {
+  if (!node) return node;
+  if (!processor) return node;
+
+  if (processor?.types?.[node.type]) {
+    const currentProcessor = processor.types?.[node.type];
+
+    return {
+      ...currentProcessor(node),
+    };
+  }
+
+  if (node.children) {
+    return {
+      ...node,
+      children: node.children.map((node) =>
+        processDataSettings(node, processor)
+      ),
+    };
+  }
+
+  return node;
+}
 
 export function fixPage(node, { settings, data, pathCache } = {}) {
-  const fixedNode = mediaItems(textMD(node));
+  const footnote = {
+    index: 1,
+    usage: [],
+    definitions: {},
+  };
+
+  const fixedNode = processDataSettings(
+    mediaItems(textMDfootnote(textMD(node), footnote)),
+    processor
+  );
 
   const rawMenu = settings?.menus?.find((item) => item?.menu?.title === "main");
 
@@ -74,6 +122,7 @@ export function fixPage(node, { settings, data, pathCache } = {}) {
     children: [
       {
         type: "page",
+        footnotes: footnote,
         menus: {
           main: {
             title: rawMenu?.menu?.title,

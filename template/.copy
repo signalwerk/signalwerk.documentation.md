@@ -1,4 +1,5 @@
 .gitignore
+src/processor.js
 src/config.jsx
 src/config.yml
 src/settings.json

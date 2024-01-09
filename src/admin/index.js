@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import CMS from "decap-cms-app";
 import config from "../../../../src/config.jsx";
 import settings from "../../../../src/settings.json";
@@ -34,11 +34,42 @@ CMS.registerPreviewTemplate("pages", ({ entry }) => Page({ entry, CMS }));
 const CmsString = CMS.getWidget("string").control;
 
 CMS.registerWidget("SignalwerkEditor", ({ field, value, onChange }) => {
+  const [fullScreen, setFullScreen] = useState(false);
+
+  // border: 2px solid rgb(223, 223, 227);
+  // position: fixed;
+  // left: 0;
+  // top: 0;
+  // z-index: 99999;
+  // background: white;
+  // width: 100%;
+  // height: 100%;
+
+  const fullScreenStyle = {
+    position: "fixed",
+    background: "white",
+    width: "100%",
+    height: "100%",
+    left: 0,
+    top: 0,
+    zIndex: 99998,
+  };
+  const fullScreenStyleBtn = {
+    position: "fixed",
+    left: 0,
+    top: 0,
+    zIndex: 99999,
+  };
+
   return (
     <>
-      {/* --{value}-- */}
-      <div style={{ height: "550px", border: "2px solid rgb(223, 223, 227)" }}>
+      <div style={fullScreen ? fullScreenStyle : { height: "550px" }}>
         <SignalwerkEditor value={value} onChange={onChange} />
+      </div>
+      <div style={fullScreen ? fullScreenStyleBtn : {}}>
+        <button onClick={(e) => setFullScreen(!fullScreen)}>
+          {!fullScreen ? "enter fullscreen" : "exit fullscreen"}
+        </button>
       </div>
     </>
   );

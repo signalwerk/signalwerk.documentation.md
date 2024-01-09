@@ -10,6 +10,7 @@ backend:
 
 site_url: "https://XXXXXX.com/"
 media_folder: /public/assets/media
+public_folder: "/assets/media"
 # media_library:
 #   name: uploadcare
 #   folder_support: true
@@ -38,7 +39,8 @@ types:
     fields:
       - label: Body
         name: body
-        widget: markdown
+        # widget: markdown
+        widget: SignalwerkEditor
         required: false
         show_raw: true
       - label: Class
@@ -210,7 +212,7 @@ box: &box
 basePage: &basePage
   - *text
   - *image
-  # - *box
+  - *box
   # - *mediaItems
   # - *grid
 

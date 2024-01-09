@@ -79,8 +79,8 @@ const SignalwerkEditor = memo(({ value, onChange }) => {
       style={{ border: 0 }}
       width="100%"
       height="100%"
-      src={`http://localhost:3000?id=${id}`}
-      // src={`https://editor.signalwerk.ch/?id=${id}`}
+      // src={`http://localhost:3000?id=${id}`}
+      src={`https://editor.signalwerk.ch/?id=${id}`}
     />
   );
 });
