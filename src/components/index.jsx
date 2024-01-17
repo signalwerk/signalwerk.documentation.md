@@ -48,13 +48,21 @@ export function typeProcessor(data, configuration = {}) {
       return (
         <>
           <Helmet htmlAttributes={{ lang }}>
-            {settings?.page?.head?.stylesheets.map((stylesheet) => (
+            {settings?.page?.head?.stylesheets?.map((stylesheet) => (
               <link href={stylesheet.path} rel="stylesheet" />
+            ))}
+            {/* <script
+              src="https://unpkg.com/pagedjs/dist/paged.polyfill.js"
+              type="text/javascript"
+            /> */}
+            {settings?.page?.head?.js?.map((js) => (
+              <script src={js.path} />
             ))}
             <meta
               name="viewport"
               content="width=device-width, initial-scale=1"
             />
+            <meta charset="utf-8" />
           </Helmet>
 
           <>{data.children && typeProcessor(data.children, configuration)}</>

@@ -23,7 +23,6 @@ yarn
 npx sdm copy:package2current
 ```
 
-
 ### Build everything
 
 ```bash
@@ -48,3 +47,4 @@ npm run dev
 npx sdm copy:current2package
 ```
 
+https://github.com/decaporg/decap-cms/pull/3891#issuecomment-1887545190

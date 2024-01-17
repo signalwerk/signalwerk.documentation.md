@@ -63,6 +63,7 @@ pagePath.forEach((originalPath) => {
       ${helmet.title.toString()}
       ${helmet.meta.toString()}
       ${helmet.link.toString()}
+      ${helmet.script.toString()}
       <link rel="stylesheet" href="${stylesheetPath}?bust=${
         // bust cache
         hash.slice(0, 6)

@@ -98,5 +98,6 @@
     "remark-rehype": "^10.1.0",
     "unified": "^10.1.2"
   },
+  "browserslist": "last 3 years",
   "type": "module"
 }
