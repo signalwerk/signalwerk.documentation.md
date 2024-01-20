@@ -1,3 +1,6 @@
+import { text } from "./text.jsx";
+
+
 export function image(node, { alt } = {}) {
   if (!node) return null;
   if (!node.path) return null;
@@ -9,7 +12,7 @@ export function image(node, { alt } = {}) {
           alt={node.alt || node.caption || alt || "picture"}
         />
       }
-      {node.caption && <p>{node.caption}</p>}
+      {node.caption && <p className="node-image__caption">{text(node)}</p>}
     </div>
   );
 }

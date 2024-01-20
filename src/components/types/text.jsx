@@ -4,7 +4,7 @@ import { renderToString } from "react-dom/server";
 
 export function text(node) {
   if (!node) return null;
-  if (!node.body) return null;
+  if (!(node?.children?.length > 0)) return null;
 
   const content = renderToString(renderNode(node.children))
     .replaceAll(`<span class="--node-remove-html-start">`, "")

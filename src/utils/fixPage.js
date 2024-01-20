@@ -6,11 +6,36 @@ export function textMD(node) {
   if (node.type === "text") {
     const { ast } = mdToAstSync(node.body);
     node.children = [removePositions(ast)];
+  } else if (node.type === "image") {
+    const { ast } = mdToAstSync(node.caption);
+    node.children = [removePositions(ast)];
   } else if (node.children) {
     node.children.map(textMD);
   }
   return node;
 }
+export function textMDfootnoteGlobal(settings) {
+  return Object.keys(settings.definitions).map((key) => {
+    const item = settings.definitions[key];
+    return {
+      type: "text",
+      children: [
+        {
+          type: "root",
+          children: [
+            {
+              type: "footnoteDefinition",
+              identifier: item.identifier,
+              index: item.index,
+              children: item.children,
+            },
+          ],
+        },
+      ],
+    };
+  });
+}
+
 export function textMDfootnote(node, settings) {
   // console.log("!!!!!footnoteReference", node);
   if (node.type === "footnoteReference") {
@@ -19,7 +44,12 @@ export function textMDfootnote(node, settings) {
   }
   if (node.type === "footnoteDefinition") {
     if (node.children.length > 0) {
+      // find position of footnote
+      const index = settings.usage.indexOf(node.identifier);
       settings.definitions[node.identifier] = node;
+      node.index = index + 1;
+
+      node.type = "noop";
     }
   } else if (node.children) {
     node.children.map((item) => textMDfootnote(item, settings));
@@ -98,7 +128,9 @@ export function fixPage(node, { settings, data, pathCache } = {}) {
   const footnote = {
     index: 1,
     usage: [],
-    definitions: {},
+    definitions: {
+      // "fn-1": { type: "footnoteDefinition", identifier: "fn-1" … },
+    },
   };
 
   const fixedNode = processDataSettings(
@@ -122,7 +154,7 @@ export function fixPage(node, { settings, data, pathCache } = {}) {
     children: [
       {
         type: "page",
-        footnotes: footnote,
+        footnotes: textMDfootnoteGlobal(footnote),
         menus: {
           main: {
             title: rawMenu?.menu?.title,
