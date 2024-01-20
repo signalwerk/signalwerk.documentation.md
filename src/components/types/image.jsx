@@ -12,7 +12,7 @@ export function image(node, { alt } = {}) {
           alt={node.alt || node.caption || alt || "picture"}
         />
       }
-      {node.caption && <p className="node-image__caption">{text(node)}</p>}
+      {node.caption && <div className="node-image__caption">{text(node)}</div>}
     </div>
   );
 }
