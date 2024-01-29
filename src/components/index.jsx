@@ -57,9 +57,9 @@ export function typeProcessor(data, configuration = {}) {
               type="text/css"
             />
             <script
-              src="https://unpkg.com/pagedjs/dist/paged.polyfill.js"
+              src="https://unpkg.com/pagedjs@0.5.0-beta.0/dist/paged.polyfill.js"
               type="text/javascript"
-            /> */}
+            ></script> */}
             {settings?.page?.head?.js?.map((js) => (
               <script src={js.path} />
             ))}
