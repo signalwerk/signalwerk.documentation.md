@@ -17,9 +17,9 @@ mkdir -p ./public/assets/media/
 # copy package config to current
 cp ./packages/signalwerk.documentation.md/template/package.json .
 
-yarn
+npm i
 
-# copy package config to current
+# copy template config to current
 npx sdm copy:package2current
 ```
 
@@ -41,10 +41,8 @@ npm run admin
 npm run dev
 ```
 
-## copy current config to package
+## copy current config to template
 
 ```bash
 npx sdm copy:current2package
 ```
-
-https://github.com/decaporg/decap-cms/pull/3891#issuecomment-1887545190
