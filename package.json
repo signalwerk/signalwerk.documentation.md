@@ -2,7 +2,6 @@
   "name": "signalwerk.documentation.md",
   "version": "1.0.0",
   "description": "",
-  "--main": "index.js",
   "bin": {
     "sdm": "./cli/index.js"
   },
@@ -16,7 +15,7 @@
     "build:clear:admin": "rm -rf ../../docs/admin/ && mkdir -p ../../docs/admin/",
     "build:ssr": "npm run build:clear:root && npm run build:clear:tmp && npm run build:ssr:style && npm run build:ssr:packer && npm run build:ssr:render",
     "build:ssr:packer": "npx parcel build --target ssr",
-    "build:ssr:style": "npx parcel build --target rootStyle && cp ./.signalwerk-doc/style/style.css ../../docs/style.css",
+    "build:ssr:style": "PARCEL_NAMER_REWRITE_PROFILE=rootStyle npx parcel build --target rootStyle && cp ./.signalwerk-doc/style/style.css ../../docs/style.css",
     "build:ssr:render": "node .signalwerk-doc/ssr/AppBuild.js",
     "build:admin": "npm run build:clear:tmp && npm run build:clear:admin && npm run build:admin:packer && npm run build:admin:copy",
     "build:admin:packer": "npx parcel build --target admin",
@@ -62,16 +61,17 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "@parcel/transformer-sass": "2.0.0-nightly.1471",
-    "@parcel/transformer-yaml": "^2.10.3",
+    "@parcel/transformer-sass": "^2.15.4",
+    "@parcel/transformer-yaml": "^2.15.4",
     "concurrently": "^8.2.2",
     "express": "^4.18.2",
-    "parcel": "2.0.0-nightly.1469",
+    "parcel": "^2.15.4",
+    "parcel-namer-rewrite": "^2.10.3-rc.2",
     "process": "^0.11.10"
   },
   "dependencies": {
     "buffer": "^6.0.3",
-    "decap-cms-app": "^3.0.12",
+    "decap-cms-app": "^3.7.2",
     "front-matter": "^4.0.2",
     "mdast-util-gfm-autolink-literal": "^1.0.3",
     "mdast-util-gfm-footnote": "^1.0.2",
@@ -86,8 +86,8 @@
     "micromark-util-combine-extensions": "^1.1.0",
     "nodemon": "^3.0.2",
     "prettier": "^3.1.1",
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0",
+    "react": "^19.1.0",
+    "react-dom": "^19.1.0",
     "react-helmet": "^6.1.0",
     "rehype-external-links": "^1.0.1",
     "rehype-highlight": "^5.0.2",
@@ -98,6 +98,22 @@
     "remark-rehype": "^10.1.0",
     "unified": "^10.1.2"
   },
+  "@parcel/resolver-default": {
+    "packageExports": true
+  },
+  "parcel-namer-rewrite": {
+    "profiles": {
+      "rootStyle": {
+        "hashing": "never"
+      }
+    }
+  },
   "browserslist": "last 3 years",
-  "type": "module"
+  "type": "module",
+  "imports": {
+    "#home-directory": {
+      "node": "./home-directory.js",
+      "default": "./home-directory-browser.js"
+    }
+  }
 }
